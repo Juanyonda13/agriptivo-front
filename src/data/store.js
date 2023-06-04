@@ -1,7 +1,17 @@
-import { createStore } from 'vuex';
+import auth from './modules/auth';
+import axios from 'axios';
 
-const store = createStore({
+export default function storeConfig(apiUrl) {
+  const api = axios.create({
+    baseURL: apiUrl
+  });
   // Configuración de tu store
-});
+  const store = {
+    modules: {
+      // Módulos de tu aplicación
+      auth
+    }
+  };
 
-export default store;
+  return store;
+}
