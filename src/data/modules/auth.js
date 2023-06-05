@@ -1,4 +1,4 @@
-// auth.js
+import axios from 'axios';
 
 const state = {
     loggedIn: false,
@@ -20,10 +20,10 @@ const actions = {
     login({ commit }, credentials) {
         return new Promise((resolve, reject) => {
           axios
-            .post("api/auth/login", credentials) // Ruta de la API de inicio de sesión
+            .post("api/login", credentials) // Ruta de la API de inicio de sesión
             .then(response => {
               const user = response.data;
-              commit("SET_USER", user);
+              commit("LOGIN", user);
               resolve(user);
             })
             .catch(error => {
@@ -31,9 +31,22 @@ const actions = {
             });
         });
       },
+    register({ commit }, credentials){
+        return new Promise((resolve, reject) => {
+            axios
+              .post("api/register", credentials) 
+              .then(response => {
+                resolve(response.data)
+              })
+              .catch(error => {
+                reject(error);
+              });
+          });
+    },
+
     logout({ commit }) {
       commit('LOGOUT');
-    }
+    },
 };
   
   export default {

@@ -15,15 +15,15 @@
         <v-btn icon>
           <v-icon>mdi-magnify</v-icon>
         </v-btn>
-  
+<!--   
         <v-btn icon color="primary">
             <v-icon>mdi-account</v-icon>
-        </v-btn>
+        </v-btn> -->
        
-            <v-btn variant="tonal" color="primary">
+            <v-btn variant="tonal" color="primary" @click="login">
               Iniciar sesion
             </v-btn>
-            <v-btn variant="flat" class="mx-2" color="primary">
+            <v-btn variant="flat" class="mx-2" color="primary" @click="register">
               registrate
             </v-btn>
       </v-toolbar>
@@ -32,3 +32,15 @@
       </v-col>
     </v-card>
   </template>
+  <script>
+  export default {
+    methods:{
+       login(){
+         this.$router.push("/login");
+       },
+       register(){
+        this.$router.push("/register");
+       }
+    }
+  }
+  </script>
