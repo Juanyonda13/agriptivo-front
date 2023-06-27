@@ -6,7 +6,8 @@
     "serve": "vite preview",
     "build": "vite build",
     "dev": "vite",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start":"vite --host"
   },
   "dependencies": {
     "axios": "^1.4.0",

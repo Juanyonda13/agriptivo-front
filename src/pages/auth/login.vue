@@ -27,6 +27,10 @@
                 maxlength="50"
                 counter
               ></v-text-field>
+                <v-checkbox
+                  v-model="checked"
+                  label="Recordarme el usuario"
+                ></v-checkbox>
               <v-btn color="primary" block @click="submitForm">Ingresar</v-btn>
               <a href="/register" class="m-1">no tienes cuenta? registrate</a>
             </v-form>
@@ -37,7 +41,7 @@
   </v-container>
 </template>
   
-  <script>
+<script>
 import AlertContainer from "../../components/Alerts/AlertContainer.vue";
 
 export default {
@@ -50,6 +54,7 @@ export default {
       password: "",
       form: true,
       loadingForm: false,
+      checked:false,
       cedulaRules: [
         (value) => !!value || "Requerido.",
         (value) => (value || "").length <= 10 || "Max 10 numeros",
@@ -70,6 +75,7 @@ export default {
         const credentials = {
           cedula_user: this.cedula_user,
           password: this.password,
+          checked:this.checked
         };
 
         this.$store
@@ -82,7 +88,7 @@ export default {
                 type: "success",
                 message: res.message,
               });
-              this.$router.push("/services");
+              this.$router.push("/");
             } else {
               if (res.code === 409) {
                 this.typeMessage = "warning";
@@ -101,7 +107,7 @@ export default {
             this.showAlert = true;
             this.errorMessage = error.message;
           });
-      }else{
+      } else {
         this.loadingForm = false;
       }
     },

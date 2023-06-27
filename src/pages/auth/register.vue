@@ -134,7 +134,6 @@ export default {
         this.loadingForm=true
         const { valid } = await this.$refs.form.validate()
         if (valid) {
-
         const credentials = {
           cedula_user: this.cedula_user,
           name_user: this.name_user,
@@ -148,7 +147,7 @@ export default {
           .dispatch("auth/register", credentials)
           .then((res) => {
             // Redireccionar al usuario a la página después de iniciar sesión
-            if (res.status === "success") {
+            if (res.status === "success") {  
               this.$refs.alertContainer.addAlert({
                 id: 1,
                 type: "success",

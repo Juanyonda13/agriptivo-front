@@ -2,6 +2,7 @@ import IndiceService from './pages/IndiceService.vue'
 import Login from './pages/auth/login.vue'
 import Nav from './components/Nav.vue'
 import Register from './pages/auth/register.vue'
+import Admin from './components/Admin.vue'
 
 export const routes = [
 
@@ -12,10 +13,17 @@ export const routes = [
     component: Nav,
     children: [
       {
-        path: '/services',
+        path: '/',
         name:'index-services',
         component: IndiceService
       }
     ]
   },
+  {
+    path: '/admin',
+    component:Admin,
+    children:[
+
+    ]
+  }
 ]

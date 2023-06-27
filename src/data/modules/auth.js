@@ -20,7 +20,7 @@ const actions = {
     login({ commit }, credentials) {
         return new Promise((resolve, reject) => {
           axios
-            .post("api/login", credentials) // Ruta de la API de inicio de sesión
+            .post("auth/login", credentials) // Ruta de la API de inicio de sesión
             .then(response => {
               const user = response.data;
               commit("LOGIN", user);
@@ -34,7 +34,7 @@ const actions = {
     register({ commit }, credentials){
         return new Promise((resolve, reject) => {
             axios
-              .post("api/register", credentials) 
+              .post("auth/register", credentials) 
               .then(response => {
                 resolve(response.data)
               })
@@ -48,10 +48,15 @@ const actions = {
       commit('LOGOUT');
     },
 };
+const getters = {
+  isLoggedIn: state => state.loggedIn,
+  currentUser: state => state.user
+};
   
   export default {
     namespaced: true,
     state,
     mutations,
-    actions
+    actions,
+    getters
   };
