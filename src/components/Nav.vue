@@ -1,21 +1,16 @@
 <template>
   <v-card color="grey-lighten-4" flat rounded="0">
-    <v-card rounded="0" class="d-flex pl-12">
-      <v-img
-        max-height="450"
-        max-width="320"
-        src="./src/assets/agrictivo3.png"
-      ></v-img>
-      <v-spacer></v-spacer>
-      <v-img
-        max-height="450"
-        max-width="320"
-        src="./src/assets/img-nav.png"
-      ></v-img>
-    </v-card>
-    <v-toolbar density="compact" :elevation="8" class="pl-10">
-      <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
-      <!-- <v-spacer></v-spacer> -->
+    <section class="section-nav">
+      <v-card rounded="0" class="d-flex pl-12">
+        <v-img
+          max-height="450"
+          max-width="260"
+          src="agrictivo3.png"
+        ></v-img>
+      </v-card>
+      <v-toolbar density="compact" :elevation="8" class="pl-10">
+        <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
+        <!-- <v-spacer></v-spacer> -->
         <v-btn value="recent">
           <v-icon color="primary">mdi-heart</v-icon>
 
@@ -56,9 +51,9 @@
         <v-btn variant="flat" class="mx-2" color="primary" @click="register">
           registrate
         </v-btn>
-
-    </v-toolbar>
-    <div  class="p-0 col-12">
+      </v-toolbar>
+    </section>
+    <div class="p-0 col-12">
       <router-view></router-view>
     </div>
   </v-card>
@@ -85,3 +80,8 @@ export default {
   },
 };
 </script>
+<style>
+.section-nav {
+  height: 14vh;
+}
+</style>
