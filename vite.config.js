@@ -9,5 +9,9 @@ export default defineConfig({
   plugins: [
 		vue(),
 		vuetify({ autoImport: true }),
+
 	],
+	build: {
+		chunkSizeWarningLimit: 90000// Tamaño límite en bytes
+	  }
 })
