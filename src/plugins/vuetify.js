@@ -5,6 +5,8 @@ import { aliases, fa } from 'vuetify/iconsets/fa'
 
 // Vuetify
 import { createVuetify } from 'vuetify'
+import * as components from 'vuetify/components'
+import * as labsComponents from 'vuetify/labs/components'
 
 const myCustomLightTheme = {
   dark: false,
@@ -33,6 +35,10 @@ export default createVuetify(
     },
     icons: {
       defaultSet: 'mdi', // This is already the default value - only for display purposes
+    },  
+    components: {
+      ...components,
+      ...labsComponents,
     },
   }
 )

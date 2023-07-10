@@ -302,7 +302,7 @@
   <section class="col-12 variables_section d-flex justify-center align-center">
     <v-card max-width="900" class="ma-auto d-flex flex-wrap mt-2">
       <v-col cols="12" sm="6">
-        <img src="../monitoreo.jpg" width="400" alt="" />
+        <img src="/monitoreo.jpeg" width="400" alt="" />
 
       </v-col>
       <v-col cols="12" sm="6" color="primary" elevation="3" rounded="5">
@@ -363,7 +363,7 @@
         </v-card>
       </v-col>
       <v-col cols="12" sm="6" align-self="center">
-        <img src="../comercauca.jpg" width="400" alt="" />
+        <img src="/comercauca.jpg" width="400" alt="" />
       </v-col>
     </v-card>
   </section>
@@ -388,8 +388,11 @@
             >
               <v-card-title
                 class="text-white"
-                v-text="card.title"
-              ></v-card-title>
+                
+              >{{ card.title
+              
+              
+              }}</v-card-title>
             </v-img>
 
             <v-card-subtitle class="pa-5">
@@ -404,7 +407,7 @@
   <section class="col-12 variables_section d-flex justify-center">
     <v-card class="ma-auto d-flex flex-wrap mt-4 w-75">
       <v-col cols="12" sm="6" align-self="center" class="">
-        <img src="../asesoria_profecional.jpg" width="400" alt="" />
+        <img src="/asesoria_profecional.jpg" width="400" alt="" />
       </v-col>
       <v-col cols="12" sm="5" color="primary" elevation="3" rounded="5">
         <v-card
@@ -434,7 +437,7 @@
   <section class="col-12 variables_section d-flex justify-center">
     <v-card class="ma-auto d-flex flex-wrap mt-4 w-75">
       <v-col cols="12" sm="6" align-self="center" class="">
-        <img src="../diseño_automatizacion.png" width="400" alt="" />
+        <img src="/diseño_automatizacion.png" width="400" alt="" />
       </v-col>
       <v-col cols="12" sm="5" color="primary" elevation="3" rounded="5">
         <v-card

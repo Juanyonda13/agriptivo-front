@@ -12,6 +12,6 @@ export default defineConfig({
 
 	],
 	build: {
-		chunkSizeWarningLimit: 90000// Tamaño límite en bytes
+		assetsInclude: ['**/*.jpg', '**/*.jpeg', '**/*.png', '**/*.gif']
 	  }
 })

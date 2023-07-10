@@ -1,8 +1,16 @@
+
+// NAVS
+import Admin from './components/Navs/Admin.vue'
+import Nav from './components/Navs/Nav.vue'
+import NavClient from './components/Navs/NavClient.vue'
+
+// PAGES
 import IndiceService from './pages/IndiceService.vue'
 import Login from './pages/auth/login.vue'
-import Nav from './components/Nav.vue'
 import Register from './pages/auth/register.vue'
-import Admin from './components/Admin.vue'
+
+import FincaRegister from './pages/finca/FincaRegister.vue'
+import FincaGestionar from './pages/finca/Gestionar.vue'
 
 export const routes = [
 
@@ -25,5 +33,21 @@ export const routes = [
     children:[
 
     ]
-  }
+  },
+  {
+    path: '/ModuleFree',
+    component:NavClient,
+    children:[
+      {
+        path: '/finca_register',
+        name:'finca_register',
+        component: FincaRegister
+      },
+      {
+        path: '/finca_gestionar',
+        name:'finca_gestionar',
+        component: FincaGestionar
+      },
+    ]
+  },
 ]

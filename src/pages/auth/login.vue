@@ -27,10 +27,10 @@
                 maxlength="50"
                 counter
               ></v-text-field>
-                <v-checkbox
-                  v-model="checked"
-                  label="Recordarme el usuario"
-                ></v-checkbox>
+              <v-checkbox
+                v-model="checked"
+                label="Recordarme el usuario"
+              ></v-checkbox>
               <v-btn color="primary" block @click="submitForm">Ingresar</v-btn>
               <a href="/register" class="m-1">no tienes cuenta? registrate</a>
             </v-form>
@@ -54,7 +54,7 @@ export default {
       password: "",
       form: true,
       loadingForm: false,
-      checked:false,
+      checked: false,
       cedulaRules: [
         (value) => !!value || "Requerido.",
         (value) => (value || "").length <= 10 || "Max 10 numeros",
@@ -71,42 +71,55 @@ export default {
     async submitForm() {
       this.loadingForm = true;
       const { valid } = await this.$refs.form.validate();
+      // VALIDACION DEL FOLMULARIO
       if (valid) {
+      //CREAR UN OBJETO PARA ENVIAR  
         const credentials = {
           cedula_user: this.cedula_user,
           password: this.password,
-          checked:this.checked
+          checked: this.checked,
         };
 
-        this.$store
-          .dispatch("auth/login", credentials)
-          .then((res) => {
-            // Redireccionar al usuario a la página después de iniciar sesión
-            if (res.status === "success") {
-              this.$refs.alertContainer.addAlert({
-                id: 1,
-                type: "success",
-                message: res.message,
-              });
-              this.$router.push("/");
-            } else {
-              if (res.code === 409) {
-                this.typeMessage = "warning";
-              } else {
-                this.typeMessage = "error";
-              }
-              this.$refs.alertContainer.addAlert({
-                id: 1,
-                type: this.typeMessage,
-                message: res.message,
-              });
-              this.loadingForm = false;
-            }
-          })
-          .catch((error) => {
+        try {
+            // CARGAR LA ACCION DE LOGIN
+            const response = await this.$store.dispatch(
+              "auth/login",
+              credentials
+            );
+            // CARGAR LA ALERTA
+            this.$refs.alertContainer.addAlert({
+              id: 1,
+              type: "success",
+              message: response,
+            });
+
+            this.loadingForm = false;
+            this.$router.push("/");
+        } catch (error) {
+          // CARGAR LA ALERTE DE ERROR
             this.showAlert = true;
             this.errorMessage = error.message;
-          });
+
+          if (error && typeof error === "object") {
+             const { code, message } = error;
+             const typeMessage = code === 409 ? "warning" : "error";
+
+            this.$refs.alertContainer.addAlert({
+                id: 1,
+                type: typeMessage,
+                message: message,
+            });
+
+              this.loadingForm = false;
+          } else {
+            this.$refs.alertContainer.addAlert({
+              id: 1,
+              type: "error",
+              message: error,
+            });
+            this.loadingForm = false;
+          }
+        }
       } else {
         this.loadingForm = false;
       }

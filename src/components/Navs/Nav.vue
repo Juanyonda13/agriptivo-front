@@ -7,6 +7,7 @@
           max-width="260"
           src="agrictivo3.png"
         ></v-img>
+        {{ auth }}
       </v-card>
       <v-toolbar density="compact" :elevation="8" class="pl-10">
         <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
@@ -59,7 +60,6 @@
   </v-card>
 </template>
 <script>
-// import { mapState } from 'vuex';
 export default {
   data() {},
   methods: {
@@ -70,13 +70,15 @@ export default {
       this.$router.push("/register");
     },
   },
+  mounted(){
+    this.$store.dispatch('auth/userInfo')
+
+  },
   computed: {
     auth() {
-      return this.$store.getters.isLoggedIn;
+      return this.$store.getters['auth/isLoggedIn'];
     },
-    //   ...mapState('data', {
-    //   isLoggedIn: state => state
-    // }),
+
   },
 };
 </script>
