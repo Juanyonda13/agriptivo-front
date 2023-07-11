@@ -6,8 +6,9 @@ import storeConfig from'./data/store'
 import { createRouter, createWebHistory } from 'vue-router';
 import { createStore } from 'vuex';
 import {routes} from './routes.js'
-loadFonts()
+import es from 'vuetify/lib/locale/es'
 
+loadFonts()
 
 const apiUrl = import.meta.env.VITE_API_URL;
 const store = createStore(storeConfig(apiUrl));
@@ -17,8 +18,12 @@ const router = createRouter({
   routes
 });
 
-createApp(App)
-  .use(vuetify)
-  .use(store)
-  .use(router)
-  .mount('#app')
+const app = createApp(App)
+
+app.use(vuetify)
+app.config.globalProperties.$vuetify = { lang: {es} }
+// app.config.globalProperties.$vuetify.lang.current = 'es'
+
+app.use(store)
+app.use(router)
+app.mount('#app')

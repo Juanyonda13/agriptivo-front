@@ -1,12 +1,18 @@
 // Styles
 import '@mdi/font/css/materialdesignicons.css'
 import 'vuetify/styles'
-import { aliases, fa } from 'vuetify/iconsets/fa'
 
 // Vuetify
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as labsComponents from 'vuetify/labs/components'
+
+// CONFIGURACION DE IDIOMA
+import { pl, es } from 'vuetify/locale'
+
+
+// PERZONALICAZION DE COMPONENTES SI LLEGA SER NECESARIO
+// import sv from './i18n/vuetify/sv'
 
 const myCustomLightTheme = {
   dark: false,
@@ -39,6 +45,11 @@ export default createVuetify(
     components: {
       ...components,
       ...labsComponents,
+    },
+    locale: {
+      locale: 'es',
+      // fallback: 'sv',
+      messages: { es, pl,  },
     },
   }
 )

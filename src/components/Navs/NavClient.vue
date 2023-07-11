@@ -40,7 +40,10 @@
           { title: 'Contacto', icon: 'mdi-email' }
         ]
       };
-    }
+    },
+    mounted(){
+    this.$store.dispatch('auth/userInfo')
+    },
   };
   </script>
   
