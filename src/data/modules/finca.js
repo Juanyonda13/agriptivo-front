@@ -26,9 +26,9 @@ const actions={
           }
     },
 
-    async list({commit},id_user){
+    async list({commit}){
           try{
-            const response = await axiosInstance.get(`api/fincasss`,id_user);
+            const response = await axiosInstance.get(`/api/fincas`);
             const { results } = response.data;
             commit('LIST',results)
           }catch(error){

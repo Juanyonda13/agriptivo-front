@@ -4,6 +4,7 @@ import axios from 'axios';
 // MODULOS
 import auth from './modules/auth';
 import finca from './modules/finca'
+import municipality from './modules/municipality';
 export default function storeConfig(apiUrl) {
 
   axiosInstance.defaults.baseURL = apiUrl; 
@@ -13,7 +14,8 @@ export default function storeConfig(apiUrl) {
     modules: {
       // Módulos de tu aplicación
       auth,
-      finca
+      finca,
+      municipality,
     }
   };
 

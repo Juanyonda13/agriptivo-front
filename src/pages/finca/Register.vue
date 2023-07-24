@@ -1,36 +1,40 @@
 <template>
-  <v-dialog
-    v-bind:value="value"
-    max-width="500px"
-    @input="$emit('update:value', $event)"
-  >
-  <AlertContainer ref="alertContainer" />
+  <v-dialog v-model="dialog" max-width="500px">
+    <AlertContainer ref="alertContainer" />
 
-    <template v-slot:activator="{ props }">
-      <slot name="activator" :props="props"></slot>
-    </template>
+
     <v-card :loading="loadingForm">
-      <!-- Contenido del diálogo para agregar una nueva finca -->
       <v-card-title>
         <span class="text-h5">Registrar tu finca</span>
       </v-card-title>
       <v-card-text>
         <v-container>
-          <v-form ref="form" v-model="form">
-            <!-- Campos del formulario para la nueva finca -->
+          <v-form ref="form" v-model="validForm">
             <v-row>
               <v-col cols="12" sm="6" md="12">
                 <v-text-field
                   v-model="name_finca"
-                  label="Nombre de tu finca"
+                  label="Nombre de tu finca*"
                   :rules="fincaRules"
-                  prepend-icon="mdi-account"
                   maxlength="50"
                   counter
+                  variant="outlined"
                   type="text"
                 ></v-text-field>
               </v-col>
-              <!-- Otros campos del formulario -->
+            </v-row>
+            <v-row>
+              <v-col cols="12" sm="6" md="12">
+                <v-autocomplete
+                  label="Vereda*"
+                  clearable
+                  item-title="name_municipality"
+                  item-value="id_municipality"
+                  :items="municipalities"
+                  variant="outlined"
+                  v-model="fk_verda_id"
+                ></v-autocomplete>
+              </v-col>
             </v-row>
           </v-form>
         </v-container>
@@ -47,92 +51,103 @@
     </v-card>
   </v-dialog>
 </template>
-  
-<script>
+
+<script setup>
 import AlertContainer from "../../components/Alerts/AlertContainer.vue";
-export default {
-   components: {
-    AlertContainer,
-  },
-  props: {
-    value: Boolean,
-  },
-  data() {
-    return {
-      name_finca: null,      
-      fincaRules: [
-        (value) => !!value || "Requerido.",
-        (value) => (value || "").length >= 3 || "Min 3 letras",
-        (value) => (value || "").length <= 50 || "Max 50 letras",
-      ],
-      loadingForm: false,
+import { useStore } from "vuex";
+import { ref, watch, onMounted, defineProps, defineEmits,computed } from "vue";
+
+const store = useStore();
+
+// Data
+const prop = defineProps(["modelValue"]);
+const emit = defineEmits(["modelValue"]);
+const dialog = ref(prop.modelValue); // Inicializamos el valor con la propiedad
+const name_finca = ref(null);
+const fk_verda_id = ref(null);
+const validForm = ref(false);
+const loadingForm = ref(false);
+const form=ref(false);
+const alertContainer=ref(null);
+const showAlert= ref(false);
+const errorMessage=ref(null);
+
+// Rules
+const fincaRules = ref([
+  (value) => !!value || "Requerido.",
+  (value) => (value || "").length >= 3 || "Mínimo 3 letras",
+  (value) => (value || "").length <= 50 || "Máximo 50 letras",
+]);
+
+// Mounted
+onMounted(() => { store.dispatch("municipality/list") });
+
+// Computed
+const municipalities =computed(() => store.getters["municipality/municipalities"] );
+
+
+
+// Methods
+async function submitForm() {
+
+  loadingForm.value = true;
+  validForm.value = false;
+
+  const { valid } = await form.value.validate();
+
+  if (valid) {
+    const credentials = {
+      name_finca: name_finca.value,
+      fk_verda_id: fk_verda_id.value,
     };
-  },
-  mounted(){
-    this.$store.dispatch("auth/userInfo");
-  },
-  computed: {
-    user() {
-      return this.$store.getters["auth/currentUser"];
-    },
-  },
-  methods: {
-    async submitForm() {
-      this.loadingForm = true;
-      const { valid } = await this.$refs.form.validate();
-      if (valid) {
-        const credentials = {
-          name_finca: this.name_finca,
-          fk_user_id: this.user._id,
-        };
 
-        try {
-          const response = await this.$store.dispatch(
-            "finca/register",
-            credentials
-          );
-          this.$refs.alertContainer.addAlert({
-            id: 1,
-            type: "success",
-            message: response,
-          });
+    try {
+      const response = await store.dispatch("finca/register", credentials);
+      await store.dispatch("finca/list")
+      alertContainer.value.addAlert({
+        id: 1,
+        type: "success",
+        message: response,
+      });
 
-          this.loadingForm = false;
-          
-        } catch (error) {
+      loadingForm.value = false;
+      close();
+    } catch (error) {
+      showAlert.value = true;
+      errorMessage.value = error.message;
 
-          this.showAlert = true;
-          this.errorMessage = error.message;
+      if (error && typeof error === "object") {
+        const { code, message } = error;
+        const typeMessage = code === 409 ? "warning" : "error";
 
-          if (error && typeof error === "object") {
-            const { code, message } = error;
-            const typeMessage = code === 409 ? "warning" : "error";
-
-            this.$refs.alertContainer.addAlert({
-              id: 1,
-              type: typeMessage,
-              message: message,
-            });
-
-            this.loadingForm = false;
-          } else {
-            this.$refs.alertContainer.addAlert({
-              id: 1,
-              type: "error",
-              message: error,
-            });
-            this.loadingForm = false;
-          }
-        }
+        alertContainer.value.addAlert({
+          id: 1,
+          type: typeMessage,
+          message: message,
+        });
       } else {
-        this.loadingForm = false;
+        alertContainer.value.addAlert({
+          id: 1,
+          type: "error",
+          message: error,
+        });
       }
-    },
-    cancel() {
-      this.$emit("update:value", false);
-    },
-  },
-};
+
+      loadingForm.value = false;
+    }
+  } else {
+    loadingForm.value = false;
+  }
+}
+
+function cancel() {
+  emit("update:modelValue",false); // Emite el evento para actualizar el valor de la propiedad
+
+}
+watch(
+  () => prop.modelValue,
+  (newValue) => {
+    dialog.value = newValue;
+  }
+);
 </script>
-  
-  

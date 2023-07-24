@@ -131,9 +131,9 @@ export default {
     //     this.valid=valid
     // },
     async submitForm() {
-        this.loadingForm=true
-        const { valid } = await this.$refs.form.validate()
-        if (valid) {
+      this.loadingForm = true;
+      const { valid } = await this.$refs.form.validate();
+      if (valid) {
         const credentials = {
           cedula_user: this.cedula_user,
           name_user: this.name_user,
@@ -143,38 +143,45 @@ export default {
           celular2: this.celular2,
         };
 
-        this.$store
-          .dispatch("auth/register", credentials)
-          .then((res) => {
-            // Redireccionar al usuario a la página después de iniciar sesión
-            if (res.status === "success") {  
-              this.$refs.alertContainer.addAlert({
-                id: 1,
-                type: "success",
-                message: res.message,
-              });
-              this.loadingForm=false
-              this.$router.push("/login");
-            } else {
-              if (res.code === 409) {
-                this.typeMessage = "warning";
-              } else {
-                this.typeMessage = "error";
-              }
-              this.loadingForm=false
-              this.$refs.alertContainer.addAlert({
-                id: 1,
-                type: this.typeMessage,
-                message: res.message,
-              });
-            }
-          })
-          .catch((error) => {
-            this.showAlert = true;
-            this.errorMessage = error.message;
+        try {
+          const response = await this.$store.dispatch(
+            "auth/register",
+            credentials
+          );
+          this.$refs.alertContainer.addAlert({
+            id: 1,
+            type: "success",
+            message: response,
           });
-      }else{
-        this.loadingForm=false
+
+          this.loadingForm = false;
+          
+        } catch (error) {
+
+          this.showAlert = true;
+          this.errorMessage = error.message;
+          if (error && typeof error === "object") {
+            const { code, message } = error;
+            const typeMessage = code === 409 ?"error": "info";
+
+            this.$refs.alertContainer.addAlert({
+              id: 1,
+              type: typeMessage,
+              message: message,
+            });
+
+            this.loadingForm = false;
+          } else {
+            this.$refs.alertContainer.addAlert({
+              id: 1,
+              type: "error",
+              message: error,
+            });
+            this.loadingForm = false;
+          }
+        }
+      } else {
+        this.loadingForm = false;
       }
     },
   },

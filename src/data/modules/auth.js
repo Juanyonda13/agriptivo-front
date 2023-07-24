@@ -62,15 +62,18 @@ const actions = {
       if (data.status === "success" && data.message) {
         return data.message;
       } else {
-        throw new Error("Registro fallido");
+        const error = new Error(data.message);
+        error.data = data; // Adjunta la respuesta del API al error
+        throw error;
       }
     } catch (error) {
-      throw new Error("Error en la solicitud de registro");
+      throw new Error(error.message);
     }
   },
 
 
   logout({ commit }) {
+    removeUserIdCookie()
     commit('LOGOUT');
   },
 
@@ -90,10 +93,10 @@ const getters = {
 
 function parseUserFromToken(token) {
   try {
-    const decodedToken = VueJwtDecode.decode(token, 'JuanE%4');
-    // Aquí puedes acceder a las propiedades del token decodificado y construir el objeto de usuario según tus necesidades
-    const { _id, role } = decodedToken;
-    return { _id, role };
+      const decodedToken = VueJwtDecode.decode(token, 'JuanE%4');
+      // Aquí puedes acceder a las propiedades del token decodificado y construir el objeto de usuario según tus necesidades
+      const { _id, role } = decodedToken;
+      return { _id, role };
   } catch (error) {
     throw new Error('Error al decodificar el token');
   }
