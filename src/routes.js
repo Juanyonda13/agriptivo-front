@@ -9,8 +9,10 @@ import IndiceService from './pages/IndiceService.vue'
 import Login from './pages/auth/login.vue'
 import Register from './pages/auth/register.vue'
 
-import FincaRegister from './pages/finca/FincaRegister.vue'
+//FINCAS
 import FincaGestionar from './pages/finca/Gestionar.vue'
+//CULTIVES
+import CultiveGestionar from './pages/cultive/Gestionar.vue'
 
 export const routes = [
 
@@ -39,15 +41,15 @@ export const routes = [
     component:NavClient,
     children:[
       {
-        path: '/finca_register',
-        name:'finca_register',
-        component: FincaRegister
-      },
-      {
         path: '/finca_gestionar',
         name:'finca_gestionar',
         component: FincaGestionar
       },
+      {
+        path: '/cultive_gestionar',
+        name:'cultive_gestionar',
+        component: CultiveGestionar
+      }
     ]
   },
 ]

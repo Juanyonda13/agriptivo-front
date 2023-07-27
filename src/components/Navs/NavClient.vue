@@ -13,18 +13,14 @@
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-icon>
           <v-list-item-content>
-            <v-list-item-title >{{
-              item.title
-            }}</v-list-item-title>
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
 
     <v-app-bar app>
-      <v-app-bar-nav-icon
-        class="d-lg-none"
-      ></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon class="d-lg-none"></v-app-bar-nav-icon>
       <v-toolbar-title>Agrictivo</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items
@@ -54,7 +50,11 @@ export default {
           icon: "mdi-home",
           click: this.finca,
         },
-        { title: "Cultivos", icon: "mdi-information" },
+        { 
+          title: "Cultivos", 
+          icon: "mdi-information", 
+          click: this.cultive 
+        },
         { title: "Servicios", icon: "mdi-cogs" },
         { title: "Contacto", icon: "mdi-email" },
       ],
@@ -66,6 +66,9 @@ export default {
   methods: {
     finca() {
       this.$router.push("/finca_gestionar");
+    },
+    cultive() {
+      this.$router.push("/cultive_gestionar");
     },
   },
 };

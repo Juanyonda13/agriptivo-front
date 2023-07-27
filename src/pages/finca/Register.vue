@@ -2,10 +2,9 @@
   <v-dialog v-model="dialog" max-width="500px">
     <AlertContainer ref="alertContainer" />
 
-
     <v-card :loading="loadingForm">
       <v-card-title>
-        <span class="text-h5">Registrar tu finca</span>
+        <span class="text-h5">{{ typeForm }}</span>
       </v-card-title>
       <v-card-text>
         <v-container>
@@ -60,7 +59,7 @@ import { ref, watch, onMounted, defineProps, defineEmits,computed } from "vue";
 const store = useStore();
 
 // Data
-const prop = defineProps(["modelValue"]);
+const prop = defineProps(["modelValue","type","data"]);
 const emit = defineEmits(["modelValue"]);
 const dialog = ref(prop.modelValue); // Inicializamos el valor con la propiedad
 const name_finca = ref(null);
@@ -82,11 +81,14 @@ const fincaRules = ref([
 // Mounted
 onMounted(() => { store.dispatch("municipality/list") });
 
+
 // Computed
 const municipalities =computed(() => store.getters["municipality/municipalities"] );
 
-
-
+const typeForm=computed(() => prop.type=== 1
+        ? "Registrar Finca"
+        : "Actualizar Finca"  
+        );
 // Methods
 async function submitForm() {
 
@@ -98,11 +100,17 @@ async function submitForm() {
   if (valid) {
     const credentials = {
       name_finca: name_finca.value,
-      fk_verda_id: fk_verda_id.value,
+      fk_vereda_id: fk_verda_id.value,
     };
 
     try {
-      const response = await store.dispatch("finca/register", credentials);
+      let response;
+      if (prop.type === -1 && prop.data) {
+        response = await store.dispatch("finca/update",{ credentials, id:prop.data.value.id_finca} );
+      } else {
+        response = await store.dispatch("finca/register", credentials);
+      }
+      // const response = await store.dispatch("finca/register", credentials);
       await store.dispatch("finca/list")
       alertContainer.value.addAlert({
         id: 1,
@@ -150,4 +158,14 @@ watch(
     dialog.value = newValue;
   }
 );
+watch(
+  () => prop.data,
+  (newValue) => {
+    if (prop.type === -1 && newValue) {
+      name_finca.value = newValue.value.name_finca;
+      fk_verda_id.value = newValue.value.fk_vereda_id;
+    }
+  }
+);
+
 </script>

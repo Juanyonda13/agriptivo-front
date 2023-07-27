@@ -1,18 +1,18 @@
 import axiosInstance from '../../api/axiosInstances';
 
 const state = {
-    cultives: null,
+    subCategories: null,
 };
 const mutations = {
-    LIST(state, cultive) {
-      state.cultive = cultive;
+    LIST(state, subCategories) {
+      state.subCategories = subCategories;
     },
 };
 const actions={
 
     async  register({ commit }, credentials) {
         try {
-            const response = await axiosInstance.post("api/cultivo", credentials);
+            const response = await axiosInstance.post("api/subcategoria", credentials);
             const { data } = response;
       
             if (data.status === "success" && data.message) {
@@ -28,7 +28,7 @@ const actions={
     },
     async list({commit}){
         try{
-          const response = await axiosInstance.get(`/api/cultivos`);
+          const response = await axiosInstance.get(`api/subcategorias`);
           const { results } = response.data;
           commit('LIST',results)
         }catch(error){
@@ -37,7 +37,7 @@ const actions={
   },
 }
 const getters = {
-    cultives: state => state.cultives,
+    subCategories: state => state.subCategories,
 };
 export default {
     namespaced: true,

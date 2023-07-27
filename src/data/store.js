@@ -3,8 +3,10 @@ import axios from 'axios';
 
 // MODULOS
 import auth from './modules/auth';
-import finca from './modules/finca'
+import finca from './modules/finca';
 import municipality from './modules/municipality';
+import cultive from './modules/cultive';
+import subCategory from './modules/subCategory';
 export default function storeConfig(apiUrl) {
 
   axiosInstance.defaults.baseURL = apiUrl; 
@@ -16,6 +18,8 @@ export default function storeConfig(apiUrl) {
       auth,
       finca,
       municipality,
+      cultive,
+      subCategory,
     }
   };
 
