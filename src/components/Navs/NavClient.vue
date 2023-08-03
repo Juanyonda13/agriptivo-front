@@ -55,7 +55,6 @@ export default {
           icon: "mdi-information", 
           click: this.cultive 
         },
-        { title: "Servicios", icon: "mdi-cogs" },
         { title: "Contacto", icon: "mdi-email" },
       ],
     };

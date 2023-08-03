@@ -14,6 +14,8 @@ import FincaGestionar from './pages/finca/Gestionar.vue'
 //CULTIVES
 import CultiveGestionar from './pages/cultive/Gestionar.vue'
 
+//CROP MONITORING
+import cropMonitoring from './pages/cropMonitoring/Gestionar.vue'
 export const routes = [
 
   {path:'/login',name:'login-auth',component:Login},
@@ -49,6 +51,11 @@ export const routes = [
         path: '/cultive_gestionar',
         name:'cultive_gestionar',
         component: CultiveGestionar
+      },
+      {
+        path: '/crop_monitoring_gesiotnar/:id_cultive',
+        name:'crop_monitoring_gesiotnar',
+        component: cropMonitoring
       }
     ]
   },

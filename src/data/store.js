@@ -7,6 +7,10 @@ import finca from './modules/finca';
 import municipality from './modules/municipality';
 import cultive from './modules/cultive';
 import subCategory from './modules/subCategory';
+import cropMonitoring from './modules/cropMonitoring';
+import Wunit from './modules/WUnit';
+import Munit from './modules/MUnit';
+
 export default function storeConfig(apiUrl) {
 
   axiosInstance.defaults.baseURL = apiUrl; 
@@ -20,6 +24,9 @@ export default function storeConfig(apiUrl) {
       municipality,
       cultive,
       subCategory,
+      cropMonitoring,
+      Wunit,
+      Munit
     }
   };
 

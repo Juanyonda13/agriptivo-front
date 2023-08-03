@@ -5,7 +5,7 @@ const state = {
 };
 const mutations = {
     LIST(state, cultive) {
-      state.cultive = cultive;
+      state.cultives = cultive;
     },
 };
 const actions={

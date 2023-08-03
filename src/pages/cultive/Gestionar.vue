@@ -28,17 +28,30 @@
             <v-toolbar-title>Gestionar Cultivos</v-toolbar-title>
 
             <v-btn color="primary" dark class="mb-2" @click="openModal">
-              + Nuevo cultivos
+              + Nuevo cultivo
             </v-btn>
           </v-toolbar>
         </template>
         <template v-slot:[`item.actions`]="{ item }">
-          <v-icon size="small" class="me-2" @click="editItem(item.raw)">
+          <v-icon size="small" class="me-2" @click="openModal(-1, item)">
             mdi-pencil
           </v-icon>
-          <v-icon size="small" @click="deleteItem(item.raw)">
+
+          <v-icon size="small" class="me-2" @click="deleteItem(item.raw)">
             mdi-delete
           </v-icon>
+          <v-tooltip top>
+            <template v-slot:activator="{ on, attrs }">
+              <v-icon
+                size="small"
+                @click="crop_monitoring(item.raw.id_cultive)"
+                v-bind="attrs"
+                v-on="on"
+              >
+                mdi-monitor-edit
+              </v-icon>
+            </template>
+          </v-tooltip>
         </template>
       </v-data-table>
     </v-col>
@@ -52,18 +65,29 @@
 import { ref, computed, onMounted } from "vue";
 import { useStore } from "vuex";
 import Register from "./Register.vue";
+import { useRouter, useRoute } from "vue-router";
 
 const headers = [
   {
     title: "Mis cultivos",
     align: "start",
     sortable: false,
-    value: "name_cultives",
+    value: "name_cultive",
   },
-  { 
-    title: 'Acciones', 
-    // key: 'actions',
-    sortable: false 
+  {
+    title: "Total del cultivo",
+    sortable: false,
+    value: "total_cultive",
+  },
+  {
+    title: "Capacidad del cultivo",
+    sortable: false,
+    value: "capacidad_cultive",
+  },
+  {
+    title: "Acciones",
+    key: "actions",
+    sortable: false,
   },
 ];
 
@@ -80,11 +104,22 @@ const cultives = computed(() =>
     ? store.getters["cultive/cultives"]
     : []
 );
-
 const openModal = () => {
   modalOpen.value = !modalOpen.value;
 };
 
+//router
+const router = useRouter();
+const route = useRoute();
+
+const crop_monitoring = (id) => {
+   router.push(
+    {
+      name:'crop_monitoring_gesiotnar',
+      params:{id_cultive:id}
+    }
+   )
+};
 const components = { Register };
 </script>
   

@@ -33,6 +33,7 @@
                     counter
                     variant="outlined"
                     type="number"
+                    
                   ></v-text-field>
                 </v-col>
               </v-row>
@@ -41,11 +42,12 @@
                   <v-autocomplete
                     label="Finca*"
                     clearable
-                    item-title="name_municipality"
-                    item-value="id_municipality"
-                    :items="municipalities"
+                    item-title="name_finca"
+                    item-value="id_finca"
+                    :items="fincas"
                     variant="outlined"
-                    v-model="fk_verda_id"
+                    v-model="fk_finca_id"
+                    :rules="selectRules"
                   ></v-autocomplete>
                 </v-col>
               </v-row>
@@ -54,11 +56,11 @@
                   <v-autocomplete
                     label="Sub categoria*"
                     clearable
-                    item-title="name_municipality"
-                    item-value="id_municipality"
-                    :items="municipalities"
+                    item-title="name_subcategory"
+                    item-value="id_subcategory"
+                    :items="subCategories"
                     variant="outlined"
-                    v-model="fk_verda_id"
+                    v-model="fk_subcategory_id"
                   ></v-autocomplete>
                 </v-col>
               </v-row>
@@ -93,9 +95,10 @@
   //FORM
   const name_cultive = ref(null);
   const capacidad_cultive = ref(null);
-  const fk_finca_id = ref(false);
-  const fk_subcategory_id = ref(false);
-
+  const fk_finca_id = ref(null);
+  const fk_subcategory_id = ref(null);
+  const validForm = ref(false);
+  const loadingForm = ref(false);
 
   const form=ref(false);
   const alertContainer=ref(null);
@@ -108,24 +111,24 @@
     (value) => (value || "").length >= 3 || "Mínimo 3 letras",
     (value) => (value || "").length <= 50 || "Máximo 50 letras",
   ]);
-  const capacidadRules = ref([
+  const selectRules = ref([
     (value) => !!value || "Requerido.",
   ]);
   
   // Mounted
   onMounted(() => { store.dispatch("subCategory/list") });
-  
+  onMounted(()=>  { store.dispatch("finca/list")       })
   // Computed
-  const municipalities =computed(() => store.getters["subCategory/subCategories"] );
-  
+  const subCategories =computed(() => store.getters["subCategory/subCategories"] );
+  const fincas = computed(() =>Array.isArray(store.getters["finca/fincas"]) ? store.getters["finca/fincas"] : []);
 
   
   
   // Methods
   async function submitForm() {
-  
     loadingForm.value = true;
     validForm.value = false;
+    console.log(2);
   
     const { valid } = await form.value.validate();
   
