@@ -39,11 +39,11 @@
               <v-row>
                 <v-col cols="12" sm="6" md="12">
                   <v-autocomplete
-                    label="Unidad de medida*"
+                    label="Medida de peso*"
                     clearable
-                    item-title="name_munit"
-                    item-value="id_munit"
-                    :items="munit"
+                    item-title="name_wunit"
+                    item-value="id_wunit"
+                    :items="wunit"
                     variant="outlined"
                     v-model="fk_wunit_id"
                     :rules="selectRules"
@@ -64,14 +64,15 @@
                   ></v-text-field>
                 </v-col>
               </v-row>
+
               <v-row>
                 <v-col cols="12" sm="6" md="12">
                   <v-autocomplete
-                    label="Medida de peso*"
+                    label="Unidad de medida*"
                     clearable
-                    item-title="name_wunit"
-                    item-value="id_wunit"
-                    :items="wunit"
+                    item-title="name_munit"
+                    item-value="id_munit"
+                    :items="munit"
                     variant="outlined"
                     v-model="fk_munit_id"
                     :rules="selectRules"
