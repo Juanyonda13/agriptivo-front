@@ -38,6 +38,9 @@
           <v-icon size="small" @click="deleteItem(item.raw)">
             mdi-delete
           </v-icon>
+          <v-icon size="small" @click="cultive(item.raw.id_finca)">
+            mdi-monitor-edit
+          </v-icon>
         </template>
       </v-data-table>
     </v-col>
@@ -58,6 +61,7 @@
 import { ref, computed, onMounted } from "vue";
 import { useStore } from "vuex";
 import Register from "./Register.vue";
+import { useRouter, useRoute } from "vue-router"
 
 const headers = [
   {
@@ -93,8 +97,8 @@ const filteredFincas = computed(() =>
 );
 
 const openModal = (type, item = null) => {
-  modalOpen.value = true;
-  typeModal.value = type;
+  modalOpen.value = true
+  typeModal.value = type
   if (type === -1 && item) {
     // Si el tipo es -1 (editar) y se proporciona un ítem, se establece el valor del ítem en dataModal.
     dataModal.value = { ...item };
@@ -108,5 +112,16 @@ const deleteItem = (item) => {
   // Implementa la lógica para eliminar el ítem aquí
 };
 
-const components = { Register };
+const components = { Register }
+
+const router = useRouter()
+
+const cultive = (id) => {
+   router.push(
+    {
+      name:'cultive_gestionar',
+      params:{id_finca:id}
+    }
+   )
+}
 </script>

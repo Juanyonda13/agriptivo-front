@@ -40,20 +40,6 @@
               <v-row>
                 <v-col cols="12" sm="6" md="12">
                   <v-autocomplete
-                    label="Finca*"
-                    clearable
-                    item-title="name_finca"
-                    item-value="id_finca"
-                    :items="fincas"
-                    variant="outlined"
-                    v-model="fk_finca_id"
-                    :rules="selectRules"
-                  ></v-autocomplete>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col cols="12" sm="6" md="12">
-                  <v-autocomplete
                     label="Sub categoria*"
                     clearable
                     item-title="name_subcategory"
@@ -84,26 +70,26 @@
   import AlertContainer from "../../components/Alerts/AlertContainer.vue";
   import { useStore } from "vuex";
   import { ref, watch, onMounted, defineProps, defineEmits,computed } from "vue";
+  import { useRouter, useRoute } from "vue-router"
   
   const store = useStore();
   
   // Data
-  const prop = defineProps(["modelValue"]);
-  const emit = defineEmits(["modelValue"]);
-  const dialog = ref(prop.modelValue);
+  const prop = defineProps(["modelValue"])
+  const emit = defineEmits(["modelValue"])
+  const dialog = ref(prop.modelValue)
 
   //FORM
-  const name_cultive = ref(null);
-  const capacidad_cultive = ref(null);
-  const fk_finca_id = ref(null);
-  const fk_subcategory_id = ref(null);
+  const name_cultive = ref(null)
+  const capacidad_cultive = ref(null)
+  const fk_subcategory_id = ref(null)
   const validForm = ref(false);
-  const loadingForm = ref(false);
+  const loadingForm = ref(false)
 
-  const form=ref(false);
-  const alertContainer=ref(null);
-  const showAlert= ref(false);
-  const errorMessage=ref(null);
+  const form=ref(false)
+  const alertContainer=ref(null)
+  const showAlert= ref(false)
+  const errorMessage=ref(null)
   
   // Rules
   const cultiveRules = ref([
@@ -113,14 +99,16 @@
   ]);
   const selectRules = ref([
     (value) => !!value || "Requerido.",
-  ]);
+  ])
+
+  //Route
+  const route = useRoute()
   
   // Mounted
-  onMounted(() => { store.dispatch("subCategory/list") });
+  onMounted(() => { store.dispatch("subCategory/list") })
   onMounted(()=>  { store.dispatch("finca/list")       })
   // Computed
-  const subCategories =computed(() => store.getters["subCategory/subCategories"] );
-  const fincas = computed(() =>Array.isArray(store.getters["finca/fincas"]) ? store.getters["finca/fincas"] : []);
+  const subCategories =computed(() => store.getters["subCategory/subCategories"] )
 
   
   
@@ -136,13 +124,13 @@
       const credentials = {
         name_cultive: name_cultive.value,
         capacidad_cultive: capacidad_cultive.value,
-        fk_finca_id:fk_finca_id.value,
+        fk_finca_id:route.params.id_finca,
         fk_subcategory_id:fk_subcategory_id.value,
       };
   
       try {
         const response = await store.dispatch("cultive/register", credentials);
-        await store.dispatch("cultive/list")
+        await store.dispatch("cultive/list",route.params.id_finca)
         alertContainer.value.addAlert({
           id: 1,
           type: "success",

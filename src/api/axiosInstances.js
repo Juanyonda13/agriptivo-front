@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from 'axios'
 import getDecryptedToken from '../helpers/cookie'
 
 const axiosInstance = axios.create({
@@ -9,15 +9,15 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   (config) => {
-    const token = getDecryptedToken();
+    const token = getDecryptedToken()
     if (token) {
-      config.headers['Authorization'] = `Bearer ${token}`;
+      config.headers['Authorization'] = `Bearer ${token}`
     }
-    return config;
+    return config
   },
   (error) => {
-    return Promise.reject(error);
+    return Promise.reject(error)
   }
 );
 
-export default axiosInstance;
+export default axiosInstance

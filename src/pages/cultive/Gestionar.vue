@@ -65,7 +65,7 @@
 import { ref, computed, onMounted } from "vue";
 import { useStore } from "vuex";
 import Register from "./Register.vue";
-import { useRouter, useRoute } from "vue-router";
+import { useRouter, useRoute } from "vue-router"
 
 const headers = [
   {
@@ -89,14 +89,26 @@ const headers = [
     key: "actions",
     sortable: false,
   },
-];
+]
 
+//router
+const router = useRouter()
+const route = useRoute()
+
+const crop_monitoring = (id) => {
+   router.push(
+    {
+      name:'crop_monitoring_gesiotnar',
+      params:{id_cultive:id}
+    }
+   )
+}
 const store = useStore();
 
 const modalOpen = ref(false);
 const search = ref("");
 onMounted(async () => {
-  await store.dispatch("cultive/list");
+  await store.dispatch("cultive/list",route.params.id_finca);
 });
 
 const cultives = computed(() =>
@@ -108,18 +120,7 @@ const openModal = () => {
   modalOpen.value = !modalOpen.value;
 };
 
-//router
-const router = useRouter();
-const route = useRoute();
 
-const crop_monitoring = (id) => {
-   router.push(
-    {
-      name:'crop_monitoring_gesiotnar',
-      params:{id_cultive:id}
-    }
-   )
-};
 const components = { Register };
 </script>
   

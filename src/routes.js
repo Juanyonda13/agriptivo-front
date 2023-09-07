@@ -48,7 +48,7 @@ export const routes = [
         component: FincaGestionar
       },
       {
-        path: '/cultive_gestionar',
+        path: '/cultive_gestionar/:id_finca',
         name:'cultive_gestionar',
         component: CultiveGestionar
       },

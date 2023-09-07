@@ -1,18 +1,17 @@
-import axiosInstance from '../../api/axiosInstances';
+import axiosInstance from '../../api/axiosInstances'
 
 const state = {
     cultives: null,
 };
 const mutations = {
     LIST(state, cultive) {
-      state.cultives = cultive;
+      state.cultives = cultive
     },
 };
 const actions={
-
     async  register({ commit }, credentials) {
         try {
-            const response = await axiosInstance.post("api/cultivo", credentials);
+            const response = await axiosInstance.post("api/cultivo", credentials)
             const { data } = response;
       
             if (data.status === "success" && data.message) {
@@ -26,15 +25,15 @@ const actions={
             throw new Error(error.message);
           }
     },
-    async list({commit}){
+    async list({commit},id){
         try{
-          const response = await axiosInstance.get(`/api/cultivos`);
+          const response = await axiosInstance.get(`/api/cultivos/${id}`)
           const { results } = response.data;
           commit('LIST',results)
         }catch(error){
-          throw new Error(error.message);
+          throw new Error(error.message)
         }
-  },
+    },
 }
 const getters = {
     cultives: state => state.cultives,
