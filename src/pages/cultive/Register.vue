@@ -230,14 +230,14 @@ watch(
 async (newvalue) => {
   if (newvalue) {
     try {
-      await store.dispatch("subCategory/list", newvalue);
-      subCategories.value = store.getters['subCategory/subCategories'];
-      console.log(store.getters['subCategory/subCategories']);
+      await store.dispatch("subCategory/list", newvalue)
+      subCategories.value = store.getters['subCategory/subCategories']
+      console.log(store.getters['subCategory/subCategories'])
     } catch (error) {
-      console.error("Error fetching categories:", error);
+      console.error("Error fetching categories:", error)
     }
   } else {
-    subCategories.value = [];
+    subCategories.value = []
   }
 }
 )

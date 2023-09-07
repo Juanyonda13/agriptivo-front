@@ -26,9 +26,9 @@ const actions={
             throw new Error(error.message)
           }
     },
-    async list({commit}){
+    async list({commit},id){
         try{
-          const response = await axiosInstance.get(`api/subcategorias`)
+          const response = await axiosInstance.get(`api/selectedcategory/${id}`)
           const { results } = response.data
           commit('LIST',results)
         }catch(error){
