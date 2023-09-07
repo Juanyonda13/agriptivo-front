@@ -54,7 +54,7 @@
                   label="Veredas*"
                   clearable
                   item-title="name_vereda"
-                  item-value="id_municipality"
+                  item-value="id_vereda"
                   :items=" veredas || []"
                   variant="outlined"
                   v-model="fk_verda_id"
