@@ -1,4 +1,4 @@
-import {axiosInstance} from '../../api/axiosInstances';
+import axiosInstance from '../../api/axiosInstances';
 
 const state = {
     departamens: null,

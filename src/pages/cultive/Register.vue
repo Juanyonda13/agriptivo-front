@@ -114,11 +114,10 @@
   
   // Methods
   async function submitForm() {
-    loadingForm.value = true;
-    validForm.value = false;
-    console.log(2);
+    loadingForm.value = true
+    validForm.value = false
   
-    const { valid } = await form.value.validate();
+    const { valid } = await form.value.validate()
   
     if (valid) {
       const credentials = {
@@ -129,7 +128,7 @@
       };
   
       try {
-        const response = await store.dispatch("cultive/register", credentials);
+        const response = await store.dispatch("cultive/register", credentials)
         await store.dispatch("cultive/list",route.params.id_finca)
         alertContainer.value.addAlert({
           id: 1,

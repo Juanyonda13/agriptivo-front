@@ -49,13 +49,7 @@ export default {
           title: "Finca",
           icon: "mdi-home",
           click: this.finca,
-        },
-        { 
-          title: "Cultivos", 
-          icon: "mdi-information", 
-          click: this.cultive 
-        },
-        { title: "Contacto", icon: "mdi-email" },
+        }
       ],
     };
   },

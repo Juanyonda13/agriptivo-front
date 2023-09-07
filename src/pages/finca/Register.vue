@@ -25,11 +25,37 @@
             <v-row>
               <v-col cols="12" sm="6" md="12">
                 <v-autocomplete
-                  label="Vereda*"
+                  label="Departamentos*"
+                  clearable
+                  item-title="name_department"
+                  item-value="id_department"
+                  :items="departamenties"
+                  variant="outlined"
+                  v-model="id_department"
+                ></v-autocomplete>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="12" sm="6" md="12">
+                <v-autocomplete
+                  label="Municipios*"
                   clearable
                   item-title="name_municipality"
                   item-value="id_municipality"
-                  :items="municipalities"
+                  :items="municipalities || []"
+                  variant="outlined"
+                  v-model="fk_municipality_id"
+                ></v-autocomplete>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="12" sm="6" md="12">
+                <v-autocomplete
+                  label="Veredas*"
+                  clearable
+                  item-title="name_vereda"
+                  item-value="id_municipality"
+                  :items=" veredas || []"
                   variant="outlined"
                   v-model="fk_verda_id"
                 ></v-autocomplete>
@@ -52,24 +78,28 @@
 </template>
 
 <script setup>
-import AlertContainer from "../../components/Alerts/AlertContainer.vue";
-import { useStore } from "vuex";
-import { ref, watch, onMounted, defineProps, defineEmits,computed } from "vue";
+import AlertContainer from "../../components/Alerts/AlertContainer.vue"
+import { useStore } from "vuex"
+import { ref, watch, onMounted, defineProps, defineEmits,computed } from "vue"
 
 const store = useStore();
 
 // Data
-const prop = defineProps(["modelValue","type","data"]);
-const emit = defineEmits(["modelValue"]);
-const dialog = ref(prop.modelValue); // Inicializamos el valor con la propiedad
-const name_finca = ref(null);
-const fk_verda_id = ref(null);
-const validForm = ref(false);
-const loadingForm = ref(false);
-const form=ref(false);
-const alertContainer=ref(null);
-const showAlert= ref(false);
-const errorMessage=ref(null);
+const prop =          defineProps(["modelValue","type","data"])
+const emit =          defineEmits(["modelValue"])
+const dialog =        ref(prop.modelValue); // Inicializamos el valor con la propiedad
+const name_finca =    ref(null)
+const fk_verda_id =   ref(null)
+const id_department=  ref(null)
+const municipalities= ref([null])
+const fk_municipality_id= ref(null) 
+const veredas=         ref([null])
+const validForm =     ref(false)
+const loadingForm =   ref(false)
+const form=           ref(false)
+const alertContainer= ref(null)
+const showAlert=      ref(false)
+const errorMessage=   ref(null)
 
 // Rules
 const fincaRules = ref([
@@ -80,15 +110,17 @@ const fincaRules = ref([
 
 // Mounted
 onMounted(() => { store.dispatch("municipality/list") });
-
+onMounted(() => { store.dispatch("departament/list") });
 
 // Computed
-const municipalities =computed(() => store.getters["municipality/municipalities"] );
+const departamenties =computed(() => store.getters["departament/departamens"] );
 
 const typeForm=computed(() => prop.type=== 1
         ? "Registrar Finca"
         : "Actualizar Finca"  
         );
+
+
 // Methods
 async function submitForm() {
 
@@ -100,7 +132,7 @@ async function submitForm() {
   if (valid) {
     const credentials = {
       name_finca: name_finca.value,
-      fk_vereda_id: fk_verda_id.value,
+      fk_vereda_id: fk_verda_id.value
     };
 
     try {
@@ -152,6 +184,8 @@ function cancel() {
   emit("update:modelValue",false); // Emite el evento para actualizar el valor de la propiedad
 
 }
+
+//WHATCH
 watch(
   () => prop.modelValue,
   (newValue) => {
@@ -167,5 +201,39 @@ watch(
     }
   }
 );
+watch(
+  () => id_department.value,
+  async (newDepartmentId) => {
+    if (newDepartmentId) {
+      try {
+        await store.dispatch("municipality/departamentShow", newDepartmentId);
+        municipalities.value = store.getters['municipality/municipalities'];
+        console.log(store.getters['municipality/municipalities']);
+      } catch (error) {
+        console.error("Error fetching municipalities:", error);
+      }
+    } else {
+      municipalities.value = [];
+    }
+  }
+)
+watch(
+  () => fk_municipality_id.value,
+  async (newVeredatId) => {
+    if (newVeredatId) {
+      try {
+        await store.dispatch("vereda/list", newVeredatId);
+        veredas.value = store.getters['vereda/veredas'];
+      } catch (error) {
+        console.error("Error fetching municipalities:", error);
+      }
+    } else {
+      // If no department is selected, reset the municipalities array
+      veredas.value = [];
+    }
+  }
+)
+
+
 
 </script>
