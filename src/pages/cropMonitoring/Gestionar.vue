@@ -70,7 +70,7 @@
     {
       title: "Talla medicion",
       sortable: false,
-      value: "capacidad_cultive",
+      value: "talla_medicion",
     },
     {
       title: "Acciones",
