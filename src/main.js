@@ -14,7 +14,7 @@ const apiUrl = import.meta.env.VITE_API_URL
 const store = createStore(storeConfig(apiUrl))
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(),
   routes
 })
 

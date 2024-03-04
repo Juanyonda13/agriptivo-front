@@ -67,7 +67,7 @@ export default {
       ],
     };
   },
-  methods: {
+  methods:{
     async submitForm() {
       this.loadingForm = true;
       const { valid } = await this.$refs.form.validate();
@@ -76,7 +76,7 @@ export default {
       //CREAR UN OBJETO PARA ENVIAR  
         const credentials = {
           cedula_user: this.cedula_user,
-          password: this.password,
+          password: t his.password,
           checked: this.checked,
         };
 

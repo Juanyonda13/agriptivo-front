@@ -16,6 +16,9 @@ import CultiveGestionar from './pages/cultive/Gestionar.vue'
 
 //CROP MONITORING
 import cropMonitoring from './pages/cropMonitoring/Gestionar.vue'
+
+import Estadistic  from './pages/estadistic/estadistic.vue'
+
 export const routes = [
 
   {path:'/login',name:'login-auth',component:Login},
@@ -56,6 +59,11 @@ export const routes = [
         path: '/crop_monitoring_gesiotnar/:id_cultive',
         name:'crop_monitoring_gesiotnar',
         component: cropMonitoring
+      },
+      {
+        path: '/estadistic/:id_cultive',
+        name:'estadistic',
+        component: Estadistic
       }
     ]
   },

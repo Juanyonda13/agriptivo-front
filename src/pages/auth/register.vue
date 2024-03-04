@@ -126,10 +126,6 @@ export default {
     };
   },
   methods: {
-    // async validate () {
-    //     const { valid } = await this.$refs.form.validate()
-    //     this.valid=valid
-    // },
     async submitForm() {
       this.loadingForm = true;
       const { valid } = await this.$refs.form.validate();

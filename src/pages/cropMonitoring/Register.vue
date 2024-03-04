@@ -206,17 +206,6 @@
       credentials.set("img_medicion",img_medicion.value)
       credentials.set("desecho",desecho.value)
       credentials.set("fk_cultive_id",route.params.id_cultive)
-
-      // const credentials = {
-      //   promedio_medicion:        promedio_medicion.value,
-      //   pspromedio_medicion:      pspromedio_medicion.value,
-      //   fk_wunit_id:              fk_wunit_id.value,
-      //   talla_medicion:           talla_medicion.value,
-      //   fk_munit_id:              fk_munit_id.value,
-      //   observacion_medicion:     observacion_medicion.value,
-      //   fk_cultive_id:            fk_cultive_id.value,
-      //   img_medicion:             img_medicion.value,
-      // };
   
       try {
         const response = await store.dispatch("cropMonitoring/register", credentials);
@@ -260,7 +249,6 @@
   function cancel() {
     emit("update:modelValue",false); 
   }
-
 
   //WHATCH
   watch(

@@ -44,11 +44,24 @@
             <template v-slot:activator="{ on, attrs }">
               <v-icon
                 size="small"
+                class="me-2"
                 @click="crop_monitoring(item.raw.id_cultive)"
                 v-bind="attrs"
                 v-on="on"
               >
                 mdi-monitor-edit
+              </v-icon>
+            </template>
+          </v-tooltip>
+          <v-tooltip top>
+            <template v-slot:activator="{ on, attrs }">
+              <v-icon
+                size="small"
+                @click="estadistic(item.raw.id_cultive)"
+                v-bind="attrs"
+                v-on="on"
+              >
+                mdi-monitor
               </v-icon>
             </template>
           </v-tooltip>
@@ -102,6 +115,12 @@ const crop_monitoring = (id) => {
       params:{id_cultive:id}
     }
    )
+}
+const estadistic=(id)=>{
+  router.push({
+    name:'estadistic',
+    params:{id_cultive:id}
+  })
 }
 const store = useStore();
 
