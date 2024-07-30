@@ -21,7 +21,7 @@
 
     <v-app-bar app>
       <v-app-bar-nav-icon class="d-lg-none"></v-app-bar-nav-icon>
-      <v-toolbar-title>Agrictivo</v-toolbar-title>
+      <v-toolbar-title @click="home">Agrictivo</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items
         v-for="(item, index) in menuItems"
@@ -62,6 +62,9 @@ export default {
     },
     cultive() {
       this.$router.push("/cultive_gestionar");
+    },
+    home() {
+      this.$router.push("/");
     },
   },
 };

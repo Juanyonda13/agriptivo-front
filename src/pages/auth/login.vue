@@ -76,7 +76,7 @@ export default {
       //CREAR UN OBJETO PARA ENVIAR  
         const credentials = {
           cedula_user: this.cedula_user,
-          password: t his.password,
+          password: this.password,
           checked: this.checked,
         };
 

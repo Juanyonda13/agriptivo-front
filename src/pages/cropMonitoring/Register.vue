@@ -1,6 +1,6 @@
 <template>
+    <AlertContainer ref="alertContainer" />
     <v-dialog v-model="dialog" max-width="500px">
-      <AlertContainer ref="alertContainer" />
   
       <v-card :loading="loadingForm">
         <v-card-title>
@@ -136,35 +136,36 @@
   
   <script setup>
   //IMPORTS
-  import AlertContainer from "../../components/Alerts/AlertContainer.vue";
-  import { useStore } from "vuex";
-  import { ref, watch, onMounted, defineProps, defineEmits,computed } from "vue";
-  import {  useRoute } from "vue-router";
+  import AlertContainer from "../../components/Alerts/AlertContainer.vue"
+  import { useStore } from "vuex"
+  import { ref, watch, onMounted, defineProps, defineEmits,computed } from "vue"
+  import {  useRoute,useRouter } from "vue-router";
   
   
   // DATA
   const route=useRoute()
-  const store = useStore();
-  const prop = defineProps(["modelValue"]);
-  const emit = defineEmits(["modelValue"]);
-  const dialog = ref(prop.modelValue);
-  const promedio_medicion = ref(null);
-  const pspromedio_medicion = ref(null);
-  const fk_wunit_id = ref(null);
-  const talla_medicion = ref(null);
-  const fk_munit_id=ref(null);
-  const observacion_medicion=ref(null);
-  const fk_cultive_id=ref(null);
-  const img_medicion=ref([]);
-  const desecho=ref(null);
+  const router=useRouter()
+  const store = useStore()
+  const prop = defineProps(["modelValue"])
+  const emit = defineEmits(["modelValue"])
+  const dialog = ref(prop.modelValue)
+  const promedio_medicion = ref(null)
+  const pspromedio_medicion = ref(null)
+  const fk_wunit_id = ref(null)
+  const talla_medicion = ref(null)
+  const fk_munit_id=ref(null)
+  const observacion_medicion=ref(null)
+  const fk_cultive_id=ref(null)
+  const img_medicion=ref([])
+  const desecho=ref(null)
   //FORM Y ALERT
-  const validForm = ref(false);
-  const loadingForm = ref(false);
-  const form=ref(false);
+  const validForm = ref(false)
+  const loadingForm = ref(false)
+  const form=ref(false)
 
-  const alertContainer=ref(null);
-  const showAlert= ref(false);
-  const errorMessage=ref(null);
+  const alertContainer=ref(null)
+  const showAlert= ref(false)
+  const errorMessage=ref(null)
   
   // RULES
   const cultiveRules = ref([
@@ -176,15 +177,16 @@
     (value) => !!value || "Requerido.",
   ]);
   
+
   // MOUNTED
-  onMounted(()=>  { store.dispatch("Munit/list")});
-  onMounted(()=>  { store.dispatch("Wunit/list")});
+  onMounted(()=>  { store.dispatch("Munit/list")})
+  onMounted(()=>  { store.dispatch("Wunit/list")})
 
 
   // COMPUTED
   const munit =computed(() => store.getters["Munit/mUnities"] );
-  const wunit = computed(() =>Array.isArray(store.getters["Wunit/wunits"]) ? store.getters["Wunit/wunits"] : []);
-  console.log(wunit.value);
+  const wunit = computed(() =>Array.isArray(store.getters["Wunit/wunits"]) ? store.getters["Wunit/wunits"] : [])
+  console.log(wunit.value)
   
   
   // METHODS
@@ -208,23 +210,26 @@
       credentials.set("fk_cultive_id",route.params.id_cultive)
   
       try {
-        const response = await store.dispatch("cropMonitoring/register", credentials);
+        const response = await store.dispatch("cropMonitoring/register", credentials)
         await store.dispatch("cropMonitoring/list",route.params.id_cultive)
         alertContainer.value.addAlert({
           id: 1,
           type: "success",
           message: response,
         });
-  
-        loadingForm.value = false;
-        close();
+        loadingForm.value = false
+        cancel()
+        close()
+        router.back()
+
       } catch (error) {
-        showAlert.value = true;
-        errorMessage.value = error.message;
+        showAlert.value = true
+        errorMessage.value = error.message
   
         if (error && typeof error === "object") {
           const { code, message } = error;
-          const typeMessage = code === 409 ? "warning" : "error";
+          const typeMessage = code === 409 ? "warning" : "error"
+          console.log(error)
   
           alertContainer.value.addAlert({
             id: 1,
@@ -232,6 +237,7 @@
             message: message,
           });
         } else {
+          console.log(error)
           alertContainer.value.addAlert({
             id: 1,
             type: "error",
@@ -239,23 +245,23 @@
           });
         }
   
-        loadingForm.value = false;
+        loadingForm.value = false
       }
     } else {
-      loadingForm.value = false;
+      loadingForm.value = false
     }
   }
   
   function cancel() {
-    emit("update:modelValue",false); 
+    emit("update:modelValue",false)
   }
 
   //WHATCH
   watch(
     () => prop.modelValue,
     (newValue) => {
-      dialog.value = newValue;
+      dialog.value = newValue
     }
-  );
+  )
   </script>
   

@@ -151,7 +151,7 @@ export default {
           });
 
           this.loadingForm = false;
-          
+          this.$router.push("/login");
         } catch (error) {
 
           this.showAlert = true;

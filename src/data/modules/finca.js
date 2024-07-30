@@ -28,7 +28,7 @@ const actions = {
   async update({ commit },{ credentials,id}) {
     try {
       console.log(credentials);
-      const response = await axiosInstance.put(`api/finca/${id}`, credentials);
+      const response = await axiosInstance.patch(`api/finca/${id}`, credentials);
       const { data } = response;
 
       if (data.status === "success" && data.message) {

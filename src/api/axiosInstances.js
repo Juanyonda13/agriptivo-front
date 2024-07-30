@@ -1,5 +1,5 @@
 import axios from 'axios'
-import getDecryptedToken from '../helpers/cookie'
+import Cookies from 'js-cookie'
 
 const axiosInstance = axios.create({
   headers: {
@@ -9,7 +9,7 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   (config) => {
-    const token = getDecryptedToken()
+    const token = Cookies.get('token')
     if (token) {
       config.headers['Authorization'] = `Bearer ${token}`
     }

@@ -216,7 +216,12 @@ async (newvalue) => {
     try {
       await store.dispatch("category/list", newvalue);
       categories.value = store.getters['category/categories'];
-      console.log(store.getters['category/categories']);
+      if( store.getters['category/categories'] === null) {
+        categories.value = [null]
+        fk_category_id.value = null
+        fk_subcategory_id.value = null
+      }
+      console.log(categories.value );
     } catch (error) {
       console.error("Error fetching categories:", error);
     }
@@ -232,6 +237,10 @@ async (newvalue) => {
     try {
       await store.dispatch("subCategory/list", newvalue)
       subCategories.value = store.getters['subCategory/subCategories']
+      if(store.getters['subCategory/subCategories'] === null) {
+        subCategories.value = [null]
+        fk_subcategory_id.value = null
+      }
       console.log(store.getters['subCategory/subCategories'])
     } catch (error) {
       console.error("Error fetching categories:", error)
