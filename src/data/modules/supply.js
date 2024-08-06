@@ -1,17 +1,17 @@
 import axiosInstance from "../../api/axiosInstances";
 
 const state = {
-  wunits: null,
+  supplies: null,
 };
 const mutations = {
-  LIST(state, wunit) {
-    state.wunits = wunit;
+  LIST(state, supply) {
+    state.supplies = supply;
   },
 };
 const actions = {
   async register({ commit }, credentials) {
     try {
-      const response = await axiosInstance.post("api/wunit", credentials);
+      const response = await axiosInstance.post("api/supply", credentials);
       const { data } = response;
 
       if (data.status === "success" && data.message) {
@@ -28,7 +28,10 @@ const actions = {
   async update({ commit }, { credentials, id }) {
     try {
       console.log(credentials);
-      const response = await axiosInstance.put(`api/wunit/${id}`, credentials);
+      const response = await axiosInstance.patch(
+        `api/supply/${id}`,
+        credentials
+      );
       const { data } = response;
 
       if (data.status === "success" && data.message) {
@@ -45,7 +48,7 @@ const actions = {
 
   async list({ commit }) {
     try {
-      const response = await axiosInstance.get(`/api/wunits`);
+      const response = await axiosInstance.get(`/api/supplies`);
       const { results } = response.data;
       commit("LIST", results);
     } catch (error) {
@@ -54,7 +57,7 @@ const actions = {
   },
 };
 const getters = {
-  wunits: (state) => state.wunits,
+  supplies: (state) => state.supplies,
 };
 export default {
   namespaced: true,
