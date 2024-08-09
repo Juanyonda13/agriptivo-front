@@ -19,16 +19,16 @@ import Munit from './modules/MUnit'
 import system from './modules/system'
 import category from './modules/category'
 
-
+import supply from './modules/supply'
+import process from './modules/supply'
 
 export default function storeConfig(apiUrl) {
 
   axiosInstance.defaults.baseURL = apiUrl
   axios.defaults.baseURL = apiUrl
-  // Configuración de tu store
+
   const store = {
     modules: {
-      // Módulos de tu aplicación
       auth,
       finca,
       municipality,
@@ -40,9 +40,11 @@ export default function storeConfig(apiUrl) {
       departament,
       vereda,
       system,
-      category
-    }
-  };
+      category,
+      process,
+      supply,
+    },
+  }
 
   return store
 }
