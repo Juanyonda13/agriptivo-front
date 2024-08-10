@@ -16,7 +16,7 @@
       <v-col cols="6">
         <v-data-table
           :headers="headers"
-          :items="cultives"
+          :items="process"
           class="elevation-3"
           :search="search"
           :items-per-page="5"
@@ -58,7 +58,7 @@
       </v-col>
     </v-row>
   
-    <!-- Modal de registro -->
+
     <Register :modelValue="modalOpen" @update:modelValue="modalOpen = $event" />
   </template>
     
@@ -66,23 +66,24 @@
   import { ref, computed, onMounted } from "vue"
   import { useStore } from "vuex"
   import { useRouter, useRoute } from "vue-router"
+  import Register from "./Register.vue"
   
   const headers = [
     {
-      title: "proceso",
+      title: "Proceso",
       align: "start",
       sortable: false,
-      value: "name-process",
+      value: "name_process",
     },
     {
-      title: "Total del cultivo",
+      title: "Estado del proceso",
       sortable: false,
-      value: "state",
+      value: "state_process",
     },
     {
-      title: "Nombre del cultivo",
+      title: "Fecha de creación",
       sortable: false,
-      value: "name_cultive",
+      value: "created_at",
     },
     {
       title: "Acciones",
@@ -90,31 +91,22 @@
       sortable: false,
     },
   ]
-  
-  //router
+
   const router = useRouter()
   const route = useRoute()
   
-  const crop_monitoring = (id) => {
-     router.push(
-      {
-        name:'crop_monitoring_gesiotnar',
-        params:{id_cultive:id}
-      }
-     )
-  }
-
   const store = useStore()
   
   const modalOpen = ref(false)
   const search = ref("")
+
   onMounted(async () => {
-    await store.dispatch("cultive/list",route.params.id_finca)
-  });
+    await store.dispatch("process/list",route.params.id_cultive)
+  })
   
-  const cultives = computed(() =>
-    Array.isArray(store.getters["cultive/cultives"])
-      ? store.getters["cultive/cultives"]
+  const process = computed(() =>
+    Array.isArray(store.getters["process/process"])
+      ? store.getters["process/process"]
       : []
   );
   const openModal = () => {

@@ -1,7 +1,6 @@
 import axiosInstance from '../api/axiosInstances'
 import axios from 'axios'
 
-// MODULOS
 import auth from './modules/auth'
 import finca from './modules/finca'
 
@@ -20,7 +19,7 @@ import system from './modules/system'
 import category from './modules/category'
 
 import supply from './modules/supply'
-import process from './modules/supply'
+import process from './modules/process'
 
 export default function storeConfig(apiUrl) {
 
