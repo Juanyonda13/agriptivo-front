@@ -14,6 +14,8 @@ import FincaGestionar from "./pages/finca/Gestionar.vue";
 import CultiveGestionar from "./pages/cultive/Gestionar.vue";
 // SUPPLIES
 import SuppliesGestionar from "./pages/supplies/Gestionar.vue";
+// OUTPUT SUPPLIES
+import OutSupplies from "./pages/output_supplies/Gestionar.vue";
 
 //CROP MONITORING
 import cropMonitoring from "./pages/cropMonitoring/Gestionar.vue";
@@ -68,6 +70,11 @@ export const routes = [
         path: "/suministro_gestionar",
         name: "suministro_gestionar",
         component: SuppliesGestionar,
+      },
+      {
+        path: "/salida_suministro_gestionar",
+        name: "salida_suministro_gestionar",
+        component: OutSupplies,
       },
     ],
   },

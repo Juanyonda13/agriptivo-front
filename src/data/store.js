@@ -16,6 +16,7 @@ import system from "./modules/system";
 import category from "./modules/category";
 // PRODUCCION
 import supply from "./modules/supply";
+import outsupply from "./modules/outsupply";
 
 export default function storeConfig(apiUrl) {
   axiosInstance.defaults.baseURL = apiUrl;
@@ -38,6 +39,7 @@ export default function storeConfig(apiUrl) {
       category,
       // PRODUCCION
       supply,
+      outsupply,
     },
   };
 
