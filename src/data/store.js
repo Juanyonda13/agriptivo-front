@@ -17,14 +17,14 @@ import category from "./modules/category";
 // PRODUCCION
 import supply from "./modules/supply";
 import outsupply from "./modules/outsupply";
+import process from "./modules/process";
 
 export default function storeConfig(apiUrl) {
   axiosInstance.defaults.baseURL = apiUrl;
   axios.defaults.baseURL = apiUrl;
-  // Configuración de tu store
+
   const store = {
     modules: {
-      // Módulos de tu aplicación
       auth,
       finca,
       municipality,
@@ -37,7 +37,7 @@ export default function storeConfig(apiUrl) {
       vereda,
       system,
       category,
-      // PRODUCCION
+      process,
       supply,
       outsupply,
     },

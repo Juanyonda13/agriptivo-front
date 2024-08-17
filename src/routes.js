@@ -22,6 +22,8 @@ import cropMonitoring from "./pages/cropMonitoring/Gestionar.vue";
 
 import Estadistic from "./pages/estadistic/estadistic.vue";
 
+import Process from "./pages/process/Gestionar.vue";
+
 export const routes = [
   { path: "/login", name: "login-auth", component: Login },
   { path: "/register", name: "register-auth", component: Register },
@@ -66,6 +68,11 @@ export const routes = [
         component: Estadistic,
       },
       // PRODUCCION
+      {
+        path: "/process/:id_cultive",
+        name: "process",
+        component: Process,
+      },
       {
         path: "/suministro_gestionar",
         name: "suministro_gestionar",

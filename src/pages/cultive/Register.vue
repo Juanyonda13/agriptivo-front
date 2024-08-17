@@ -221,7 +221,6 @@ async (newvalue) => {
         fk_category_id.value = null
         fk_subcategory_id.value = null
       }
-      console.log(categories.value );
     } catch (error) {
       console.error("Error fetching categories:", error);
     }

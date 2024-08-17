@@ -57,7 +57,20 @@
             <template v-slot:activator="{ on, attrs }">
               <v-icon
                 size="small"
+                class="me-2"
                 @click="estadistic(item.raw.id_cultive)"
+                v-bind="attrs"
+                v-on="on"
+              >
+                mdi-monitor
+              </v-icon>
+            </template>
+          </v-tooltip>
+          <v-tooltip top>
+            <template v-slot:activator="{ on, attrs }">
+              <v-icon
+                size="small"
+                @click="process(item.raw.id_cultive)"
                 v-bind="attrs"
                 v-on="on"
               >
@@ -116,9 +129,17 @@ const crop_monitoring = (id) => {
     }
    )
 }
+
 const estadistic=(id)=>{
   router.push({
     name:'estadistic',
+    params:{id_cultive:id}
+  })
+}
+
+const process =(id)=>{
+  router.push({
+    name:'process',
     params:{id_cultive:id}
   })
 }

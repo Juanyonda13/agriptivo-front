@@ -94,7 +94,7 @@ const fincas = computed(() =>
 
 const filteredFincas = computed(() =>
   fincas.value.filter((finca) => finca.name_finca.toLowerCase().includes(search.value.toLowerCase()))
-);
+)
 
 const openModal = (type, item = null) => {
   modalOpen.value = true
