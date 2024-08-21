@@ -136,7 +136,7 @@ async function submitForm() {
         response = await store.dispatch("supply/register", credentials);
       }
       // const response = await store.dispatch("finca/register", credentials);
-      await store.dispatch("supplies/list")
+      await store.dispatch("supply/list")
       alertContainer.value.addAlert({
         id: 1,
         type: "success",

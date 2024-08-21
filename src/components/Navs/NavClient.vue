@@ -38,11 +38,6 @@ export default {
           title: "Finca",
           icon: "mdi-home",
           click: this.finca,
-        },
-        {
-          title: "Suministro",
-          icon: "mdi-home",
-          click: this.suministro,
         }
       ],
     };

@@ -46,9 +46,9 @@ const actions = {
     }
   },
 
-  async list({ commit }) {
+  async list({ commit },id) {
     try {
-      const response = await axiosInstance.get(`/api/supplies`);
+      const response = await axiosInstance.get(`/api/supplies/${id}`);
       const { results } = response.data;
       commit("LIST", results);
     } catch (error) {

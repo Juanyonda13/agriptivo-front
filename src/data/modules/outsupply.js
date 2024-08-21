@@ -46,9 +46,9 @@ const actions = {
     }
   },
 
-  async list({ commit }) {
+  async list({ commit },id) {
     try {
-      const response = await axiosInstance.get(`/api/outsupplies`);
+      const response = await axiosInstance.get(`/api/outsupplies/${id}`)
       const { results } = response.data;
       commit("LIST", results);
     } catch (error) {
@@ -74,7 +74,7 @@ const actions = {
   },
 };
 const getters = {
-  supplies: (state) => state.supplies,
+  outsupplies: (state) => state.outsupplies,
 };
 export default {
   namespaced: true,

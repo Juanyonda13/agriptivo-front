@@ -81,6 +81,25 @@
                 </template>
             </v-tooltip>
             </v-btn>
+            <v-btn variant="text">
+              <v-tooltip top
+                activator="parent"
+                location="top"
+              >
+                Sumninistros salida
+                <template v-slot:activator="{ on, attrs }">
+                  <v-icon
+                    size="large"
+                    class="me-2"
+                    @click="output(item.raw.id_process)"
+                    v-bind="attrs"
+                    v-on="on"
+                  >
+                    mdi-monitor-edit
+                  </v-icon>
+                </template>
+            </v-tooltip>
+            </v-btn>
           </template>
         </v-data-table>
       </v-col>
@@ -153,6 +172,14 @@
     router.push(
     {
       name:'cif',
+      params:{id_process:id}
+    }
+   )
+  }
+  const output=(id)=>{
+    router.push(
+    {
+      name:'salida_suministro_gestionar',
       params:{id_process:id}
     }
    )

@@ -53,9 +53,10 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from "vue";
+import { ref, computed, onMounted } from "vue"
 import { useStore } from "vuex";
-import Register from "./Register.vue";
+import Register from "./Register.vue"
+import { useRoute } from "vue-router"
 
 const headers = [
   {
@@ -81,12 +82,14 @@ const headers = [
   },
 ]
 
-const store = useStore();
+const store = useStore()
+const route = useRoute()
 
-const modalOpen = ref(false);
+const modalOpen = ref(false)
 const search = ref("");
+
 onMounted(async () => {
-  await store.dispatch("outsupply/list");
+  await store.dispatch("outsupply/list",route.params.id_process)
 });
 
 
@@ -95,10 +98,11 @@ const outsupplies = computed(() =>
     ? store.getters["outsupply/outsupplies"]
     : []
 );
+console.log(outsupplies)
 const openModal = () => {
-  modalOpen.value = !modalOpen.value;
+  modalOpen.value = !modalOpen.value
 };
 
 
-const components = { Register };
+const components = { Register }
 </script>

@@ -43,6 +43,7 @@
 import { ref, computed, onMounted } from "vue";
 import { useStore } from "vuex";
 import Register from "./Register.vue";
+import { useRoute } from "vue-router";
 // import { useRouter, useRoute } from "vue-router"
 
 const headers = [
@@ -61,6 +62,8 @@ const headers = [
 ];
 
 const store = useStore();
+const route = useRoute()
+
 
 const modalOpen = ref(false);
 const search = ref("");
@@ -68,7 +71,7 @@ const dataModal = ref({});
 const typeModal = ref(1);
 
 onMounted(async () => {
-  await store.dispatch("supply/list");
+  await store.dispatch("supply/list",route.params.id_finca);
 });
 
 const supplies = computed(() =>

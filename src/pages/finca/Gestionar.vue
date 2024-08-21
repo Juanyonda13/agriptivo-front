@@ -32,16 +32,55 @@
           </v-toolbar>
         </template>
         <template v-slot:[`item.actions`]="{ item }">
-          <v-icon size="small" class="me-2" @click="openModal(-1, item)">
-            mdi-pencil
-          </v-icon>
-          <v-icon size="small" @click="deleteItem(item.raw)">
-            mdi-delete
-          </v-icon>
-          <v-icon size="small" @click="cultive(item.raw.id_finca)">
-            mdi-monitor-edit
-          </v-icon>
-        </template>
+            <v-btn variant="text" class="">
+              <v-icon size="large" class="me-2" @click="openModal(-1, item)">
+                mdi-pencil
+              </v-icon>
+            </v-btn>
+            <v-btn variant="text">
+              <v-icon size="large" class="me-2" @click="deleteItem(item.raw)">
+                mdi-delete
+              </v-icon>
+            </v-btn>
+            <v-btn variant="text">
+              <v-tooltip top
+                activator="parent"
+                location="top"
+              >
+                Cultivo
+                <template v-slot:activator="{ on, attrs }">
+                  <v-icon
+                    size="large"
+                    class="me-2"
+                    @click="cultive(item.raw.id_finca)"
+                    v-bind="attrs"
+                    v-on="on"
+                  >
+                    mdi-monitor-edit
+                  </v-icon>
+                </template>
+            </v-tooltip>
+            </v-btn>
+            <v-btn variant="text">
+              <v-tooltip top
+                activator="parent"
+                location="top"
+              >
+                Sumninistros entrada
+                <template v-slot:activator="{ on, attrs }">
+                  <v-icon
+                    size="large"
+                    class="me-2"
+                    @click="supplies(item.raw.id_finca)"
+                    v-bind="attrs"
+                    v-on="on"
+                  >
+                    mdi-monitor-edit
+                  </v-icon>
+                </template>
+            </v-tooltip>
+            </v-btn>
+          </template>
       </v-data-table>
     </v-col>
   </v-row>
@@ -120,6 +159,14 @@ const cultive = (id) => {
    router.push(
     {
       name:'cultive_gestionar',
+      params:{id_finca:id}
+    }
+   )
+}
+const supplies = (id) => {
+   router.push(
+    {
+      name:'suministro_gestionar',
       params:{id_finca:id}
     }
    )

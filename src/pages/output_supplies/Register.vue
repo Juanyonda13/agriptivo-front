@@ -10,12 +10,7 @@
       <v-card-text>
         <v-container>
           <v-form ref="form" v-model="validForm">
-            <v-row>
-              <v-col cols="12" sm="6" md="12">
-                <v-text-field v-model="fk_process_id" label="Proceso*" :rules="cultiveRules" maxlength="50" counter
-                  variant="outlined" type="text"></v-text-field>
-              </v-col>
-            </v-row>
+
             <v-row>
               <v-col cols="12" sm="6" md="12">
                 <v-text-field v-model="amount_outsupplies" label="Cantidad*" :rules="capacidadRules" maxlength="50"
@@ -25,14 +20,15 @@
 
             <v-row>
               <v-col cols="12" sm="6" md="12">
-                <v-autocomplete label="Sistemas*" clearable item-title="name_system" item-value="id_system"
-                  :items="dataWunits" variant="outlined" v-model="fk_wunit_id" :rules="selectRules"></v-autocomplete>
+                <v-autocomplete label="Unidad de medición*" clearable item-title="name_wunit" item-value="id_wunit"
+                  :items="DataWunits" variant="outlined" v-model="fk_wunit_id" :rules="selectRules"></v-autocomplete>
               </v-col>
             </v-row>
+
             <v-row>
               <v-col cols="12" sm="6" md="12">
                 <v-autocomplete label="Suministro*" clearable item-title="name_supplies" item-value="id_supplies"
-                  :items="dataSupplies" variant="outlined" v-model="fk_supplies_id"></v-autocomplete>
+                  :items="supplies" variant="outlined" v-model="fk_supplies_id" :rules="selectRules"></v-autocomplete>
               </v-col>
             </v-row>
           </v-form>
@@ -66,7 +62,6 @@ const amount_outsupplies = ref(null);
 const fk_wunit_id = ref(null);
 const fk_supplies_id = ref(null);
 
-
 const validForm = ref(false);
 const loadingForm = ref(false);
 
@@ -89,12 +84,12 @@ const selectRules = ref([
 const route = useRoute()
 
 // Mounted
-onMounted(() => { store.dispatch("finca/list") })
-onMounted(() => { store.dispatch("system/list") })
+onMounted(() => { store.dispatch("supply/list") })
+onMounted(() => { store.dispatch("Wunit/list") });
 
 // Computed
-const fincas = computed(() => Array.isArray(store.getters["finca/fincas"]) ? store.getters["finca/fincas"] : []);
-const systems = computed(() => store.getters["system/systems"]);
+const supplies = computed(() => Array.isArray(store.getters["supply/supplies"])?store.getters["supply/supplies"]:[]);
+const DataWunits = computed(() => store.getters["Wunit/wunits"]);
 
 
 // Methods
@@ -106,15 +101,15 @@ async function submitForm() {
 
   if (valid) {
     const credentials = {
-      name_cultive: name_cultive.value,
-      capacidad_cultive: capacidad_cultive.value,
-      fk_finca_id: route.params.id_finca,
-      fk_subcategory_id: fk_subcategory_id.value,
+      fk_wunit_id: fk_wunit_id.value,
+      amount_outsupplies: amount_outsupplies.value,
+      fk_process_id: route.params.id_process,
+      fk_supplies_id: fk_supplies_id.value,
     };
 
     try {
-      const response = await store.dispatch("cultive/register", credentials);
-      await store.dispatch("cultive/list", route.params.id_finca)
+      const response = await store.dispatch("outsupply/register", credentials);
+      await store.dispatch("outsupply/list", route.params.id_process)
       alertContainer.value.addAlert({
         id: 1,
         type: "success",
@@ -160,46 +155,6 @@ watch(
     dialog.value = newValue;
   }
 )
-watch(
-  () => fk_system_id.value,
-  async (newvalue) => {
-    if (newvalue) {
-      try {
-        await store.dispatch("category/list", newvalue);
-        categories.value = store.getters['category/categories'];
-        if (store.getters['category/categories'] === null) {
-          categories.value = [null]
-          fk_category_id.value = null
-          fk_subcategory_id.value = null
-        }
-        console.log(categories.value);
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-      }
-    } else {
-      categories.value = [];
-    }
-  }
-)
-watch(
-  () => fk_category_id.value,
-  async (newvalue) => {
-    if (newvalue) {
-      try {
-        await store.dispatch("subCategory/list", newvalue)
-        subCategories.value = store.getters['subCategory/subCategories']
-        if (store.getters['subCategory/subCategories'] === null) {
-          subCategories.value = [null]
-          fk_subcategory_id.value = null
-        }
-        console.log(store.getters['subCategory/subCategories'])
-      } catch (error) {
-        console.error("Error fetching categories:", error)
-      }
-    } else {
-      subCategories.value = []
-    }
-  }
-)
+
 
 </script>

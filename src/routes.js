@@ -78,7 +78,7 @@ export const routes = [
         component: Process,
       },
       {
-        path: "/suministro_gestionar",
+        path: "/suministro_gestionar/:id_finca",
         name: "suministro_gestionar",
         component: SuppliesGestionar,
       },
@@ -98,7 +98,7 @@ export const routes = [
         component: Cif,
       },
       {
-        path: "/salida_suministro_gestionar",
+        path: "/salida_suministro_gestionar/:id_process",
         name: "salida_suministro_gestionar",
         component: OutSupplies,
       },
