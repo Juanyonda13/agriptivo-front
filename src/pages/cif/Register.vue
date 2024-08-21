@@ -5,7 +5,7 @@
   
       <v-card :loading='loadingForm'>
         <v-card-title>
-          <span class='text-h5'>Registrar tu Proceso</span>
+          <span class='text-h5'>Registrar tu CIF</span>
         </v-card-title>
         <v-card-text>
           <v-container>
@@ -13,8 +13,8 @@
               <v-row>
                 <v-col cols='12' sm='6' md='12'>
                   <v-text-field
-                    v-model='name_process'
-                    label='Nombre de tu Proceso*'
+                    v-model='name_cif'
+                    label='Nombre de tu Actividad*'
                     :rules='processRules'
                     maxlength='50'
                     counter
@@ -25,15 +25,15 @@
               </v-row>
               <v-row>
                 <v-col cols='12' sm='6' md='12'>
-                  <v-textarea label="descripcion"
-                    v-model='description'
-                    :rules='descriptionRules'
+                    <v-text-field
+                    v-model='price_cif'
+                    label='Costo*'
+                    :rules='processRules'
                     maxlength='50'
                     counter
                     variant='outlined'
-                    type='text'
-                  >
-                  </v-textarea>
+                    type='number'
+                    ></v-text-field>
                 </v-col>
               </v-row>
             </v-form>
@@ -66,12 +66,11 @@
   const dialog = ref(prop.modelValue)
   
   //FORM
-  const name_process = ref(null)
-  const description = ref(null)
-  const fk_cultive_id = ref(null)
+  const price_cif = ref(null)
+  const name_cif = ref(null)
   const validForm = ref(false)
   const loadingForm = ref(false)
-  
+
   const form=ref(false)
   const alertContainer=ref(null)
   const showAlert= ref(false)
@@ -89,6 +88,7 @@
   ])
   //Route
   const route=useRoute()
+  
 
   async function submitForm() {
     loadingForm.value = true
@@ -98,14 +98,14 @@
   
     if (valid) {
       const credentials = {
-        name_process: name_process.value,
-        description: description.value,
-        fk_cultive_id:route.params.id_cultive,
+        fk_process_id:route.params.id_process,
+        price_cif:price_cif.value,
+        name_cif:name_cif.value,
       }
-  
+      
       try {
-        const response = await store.dispatch('process/register', credentials)
-        await store.dispatch('process/list',route.params.id_cultive)
+        const response = await store.dispatch('cif/register', credentials)
+        await store.dispatch('cif/list',route.params.id_process)
         alertContainer.value.addAlert({
           id: 1,
           type: 'success',

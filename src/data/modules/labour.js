@@ -1,18 +1,18 @@
 import axiosInstance from '../../api/axiosInstances'
 
 const state = {
-    process: null,
+    labour: null,
 }
 const mutations={
-    LIST(state, process) {
-        state.process = process
+    LIST(state, labour) {
+        state.labour = labour
       },
 }
 
 const actions={
     async list({commit},id){
         try{
-          const response = await axiosInstance.get(`/api/process/cultive/${id}`)
+          const response = await axiosInstance.get(`/api/labour/process/${id}`)
           const { results } = response.data
           commit('LIST',results)
         }catch(error){
@@ -21,7 +21,7 @@ const actions={
     },
     async  register({ commit }, credentials) {
       try {
-          const response = await axiosInstance.post("api/process", credentials)
+          const response = await axiosInstance.post("api/labour", credentials)
           const { data } = response
     
           if (data.status === "success" && data.message) {
@@ -37,7 +37,7 @@ const actions={
     },
 }
 const getters = {
-    process: state => state.process,
+    labour: state => state.labour,
 }
 export default {
     namespaced: true,

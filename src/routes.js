@@ -3,12 +3,10 @@ import Admin from './components/Navs/Admin.vue'
 import Nav from './components/Navs/Nav.vue'
 import NavClient from './components/Navs/NavClient.vue'
 
-// PAGES
 import IndiceService from './pages/IndiceService.vue'
 import Login from './pages/auth/login.vue'
 import Register from './pages/auth/register.vue'
 
-//FINCAS
 import FincaGestionar from './pages/finca/Gestionar.vue'
 //CULTIVES
 import CultiveGestionar from './pages/cultive/Gestionar.vue'
@@ -21,6 +19,10 @@ import cropMonitoring from './pages/cropMonitoring/Gestionar.vue'
 import Estadistic from './pages/estadistic/estadistic.vue'
 
 import Process from './pages/process/Gestionar.vue'
+
+import Labour from './pages/labour/Gestionar.vue'
+
+import Cif from './pages/cif/Gestionar.vue'
 
 export const routes = [
   { path: '/login', name: 'login-auth', component: Login },
@@ -75,6 +77,16 @@ export const routes = [
         path: '/process/:id_cultive',
         name: 'process',
         component: Process,
+      },
+      {
+        path: '/labour/:id_process',
+        name: 'labour',
+        component: Labour,
+      },
+      {
+        path: '/cif/:id_process',
+        name: 'cif',
+        component: Cif,
       }
     ],
   },

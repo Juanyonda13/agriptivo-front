@@ -13,10 +13,10 @@
     </v-row>
   
     <v-row justify="center">
-      <v-col cols="9">
+      <v-col cols="6">
         <v-data-table
           :headers="headers"
-          :items="process"
+          :items="labour"
           class="elevation-3"
           :search="search"
           :items-per-page="5"
@@ -25,10 +25,10 @@
           <!-- Contenido adicional del v-data-table -->
           <template v-slot:top>
             <v-toolbar flat>
-              <v-toolbar-title>Gestionar procesos</v-toolbar-title>
+              <v-toolbar-title>Gestionar CIF</v-toolbar-title>
   
               <v-btn color="primary" dark class="mb-2" @click="openModal">
-                + Nuevo procesos
+                + Nuevo CIF
               </v-btn>
             </v-toolbar>
           </template>
@@ -43,44 +43,7 @@
                 mdi-delete
               </v-icon>
             </v-btn>
-            <v-btn variant="text">
-              <v-tooltip top
-                activator="parent"
-                location="top"
-              >
-                Actividades
-                <template v-slot:activator="{ on, attrs }">
-                  <v-icon
-                    size="large"
-                    class="me-2"
-                    @click="labour(item.raw.id_process)"
-                    v-bind="attrs"
-                    v-on="on"
-                  >
-                    mdi-monitor-edit
-                  </v-icon>
-                </template>
-            </v-tooltip>
-            </v-btn>
-            <v-btn variant="text">
-              <v-tooltip top
-                activator="parent"
-                location="top"
-              >
-                Cif
-                <template v-slot:activator="{ on, attrs }">
-                  <v-icon
-                    size="large"
-                    class="me-2"
-                    @click="cif(item.raw.id_process)"
-                    v-bind="attrs"
-                    v-on="on"
-                  >
-                    mdi-monitor-edit
-                  </v-icon>
-                </template>
-            </v-tooltip>
-            </v-btn>
+
           </template>
         </v-data-table>
       </v-col>
@@ -98,23 +61,19 @@
   
   const headers = [
     {
-      title: "Proceso",
+      title: "Cif",
       align: "start",
       sortable: false,
-      value: "name_process",
+      value: "name_cif",
     },
     {
-      title: "Estado del proceso",
+      title: "Costo",
       sortable: false,
-      value: "state_process",
-    },
-    {
-      title: "Fecha de creación",
-      sortable: false,
-      value: "created_at",
+      value: "price_cif",
     },
     {
       title: "Acciones",
+      align: "center",
       key: "actions",
       sortable: false,
     },
@@ -129,33 +88,19 @@
   const search = ref("")
 
   onMounted(async () => {
-    await store.dispatch("process/list",route.params.id_cultive)
+    await store.dispatch("cif/list",route.params.id_process)
   })
   
-  const process = computed(() =>
-    Array.isArray(store.getters["process/process"])
-      ? store.getters["process/process"]
+  const labour = computed(() =>
+    Array.isArray(store.getters["cif/cif"])
+      ? store.getters["cif/cif"]
       : []
-  );
+  )
+  
   const openModal = () => {
     modalOpen.value = !modalOpen.value
   };
   
-  const labour=(id)=>{
-    router.push(
-    {
-      name:'labour',
-      params:{id_process:id}
-    }
-   )
-  }
-  const cif=(id)=>{
-    router.push(
-    {
-      name:'cif',
-      params:{id_process:id}
-    }
-   )
-  }
+  
   </script>
     

@@ -20,6 +20,9 @@ import category from './modules/category'
 
 import supply from './modules/supply'
 import process from './modules/process'
+import labour from './modules/labour'
+import cif from './modules/cif'
+import role from './modules/role'
 
 export default function storeConfig(apiUrl) {
 
@@ -42,6 +45,9 @@ export default function storeConfig(apiUrl) {
       category,
       process,
       supply,
+      labour,
+      cif,
+      role
     },
   }
 

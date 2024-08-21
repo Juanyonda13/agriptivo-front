@@ -5,7 +5,7 @@
   
       <v-card :loading='loadingForm'>
         <v-card-title>
-          <span class='text-h5'>Registrar tu Proceso</span>
+          <span class='text-h5'>Registrar tu Actividad</span>
         </v-card-title>
         <v-card-text>
           <v-container>
@@ -13,8 +13,8 @@
               <v-row>
                 <v-col cols='12' sm='6' md='12'>
                   <v-text-field
-                    v-model='name_process'
-                    label='Nombre de tu Proceso*'
+                    v-model='name_labour'
+                    label='Nombre de tu Actividad*'
                     :rules='processRules'
                     maxlength='50'
                     counter
@@ -36,6 +36,43 @@
                   </v-textarea>
                 </v-col>
               </v-row>
+              <v-row>
+                <v-col cols='12' sm='6' md='12'>
+                    <v-text-field
+                            v-model='cost_labour'
+                            label='Costo*'
+                            :rules='processRules'
+                            counter
+                            variant='outlined'
+                            type='number'
+                    ></v-text-field>
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col cols='12' sm='6' md='12'>
+                    <v-text-field
+                            v-model='working_hours_labour'
+                            label='Horas de trabajo*'
+                            :rules='processRules'
+                            counter
+                            variant='outlined'
+                            type='number'
+                    ></v-text-field>
+                </v-col>
+              </v-row>
+              <v-row>
+              <v-col cols="12" sm="6" md="12">
+                <v-autocomplete
+                  label="Trabajadores*"
+                  clearable
+                  item-title="name_user"
+                  item-value="id_user"
+                  :items="jornareros"
+                  variant="outlined"
+                  v-model="id_user"
+                ></v-autocomplete>
+              </v-col>
+            </v-row>
             </v-form>
           </v-container>
         </v-card-text>
@@ -66,12 +103,14 @@
   const dialog = ref(prop.modelValue)
   
   //FORM
-  const name_process = ref(null)
+  const name_labour = ref(null)
   const description = ref(null)
-  const fk_cultive_id = ref(null)
   const validForm = ref(false)
   const loadingForm = ref(false)
-  
+  const id_user=ref(null)
+  const cost_labour=ref(null)
+  const working_hours_labour=ref(null)
+
   const form=ref(false)
   const alertContainer=ref(null)
   const showAlert= ref(false)
@@ -89,6 +128,12 @@
   ])
   //Route
   const route=useRoute()
+  
+  // Mounted
+  onMounted(()=>  { store.dispatch('role/listJornareros',3)})
+  
+
+  const jornareros =computed(() => store.getters["role/jornareros"] )
 
   async function submitForm() {
     loadingForm.value = true
@@ -98,14 +143,17 @@
   
     if (valid) {
       const credentials = {
-        name_process: name_process.value,
+        name_labour: name_labour.value,
         description: description.value,
-        fk_cultive_id:route.params.id_cultive,
+        id_user:id_user.value,
+        cost_labour:cost_labour.value,
+        working_hours_labour:working_hours_labour.value,
+        fk_process_id:route.params.id_process,
       }
-  
+      
       try {
-        const response = await store.dispatch('process/register', credentials)
-        await store.dispatch('process/list',route.params.id_cultive)
+        const response = await store.dispatch('labour/register', credentials)
+        await store.dispatch('labour/list',route.params.id_process)
         alertContainer.value.addAlert({
           id: 1,
           type: 'success',
