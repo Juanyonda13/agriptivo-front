@@ -1,5 +1,5 @@
-import axiosInstance from '../api/axiosInstances'
-import axios from 'axios'
+import axiosInstance from "../api/axiosInstances";
+import axios from "axios";
 
 import auth from './modules/auth'
 import finca from './modules/finca'
@@ -23,11 +23,11 @@ import process from './modules/process'
 import labour from './modules/labour'
 import cif from './modules/cif'
 import role from './modules/role'
+import outsupply from "./modules/outsupply";
 
 export default function storeConfig(apiUrl) {
-
-  axiosInstance.defaults.baseURL = apiUrl
-  axios.defaults.baseURL = apiUrl
+  axiosInstance.defaults.baseURL = apiUrl;
+  axios.defaults.baseURL = apiUrl;
 
   const store = {
     modules: {
@@ -47,9 +47,10 @@ export default function storeConfig(apiUrl) {
       supply,
       labour,
       cif,
-      role
+      role,
+      outsupply,
     },
-  }
+  };
 
-  return store
+  return store;
 }
