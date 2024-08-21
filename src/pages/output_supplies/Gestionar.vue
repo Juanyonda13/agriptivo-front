@@ -59,21 +59,11 @@ import Register from "./Register.vue";
 
 const headers = [
   {
-    title: "Insumos utilizados",
+    title: "Insumo salida",
     align: "start",
     sortable: false,
     value: "amount_outsupplies",
   },
-  // {
-  //   title: "Total del cultivo",
-  //   sortable: false,
-  //   value: "total_cultive",
-  // },
-  // {
-  //   title: "Capacidad del cultivo",
-  //   sortable: false,
-  //   value: "capacidad_cultive",
-  // },
   {
     title: "Acciones",
     key: "actions",

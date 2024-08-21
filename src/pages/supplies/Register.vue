@@ -39,20 +39,6 @@
                   :items="DataFincas" variant="outlined" v-model="fk_finca_id"></v-autocomplete>
               </v-col>
             </v-row>
-
-            <!-- <v-row>
-              <v-col cols="12" sm="6" md="12">
-                <v-autocomplete label="Municipios*" clearable item-title="name_municipality"
-                  item-value="id_municipality" :items="municipalities || []" variant="outlined"
-                  v-model="fk_municipality_id"></v-autocomplete>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col cols="12" sm="6" md="12">
-                <v-autocomplete label="Veredas*" clearable item-title="name_vereda" item-value="id_vereda"
-                  :items="veredas || []" variant="outlined" v-model="fk_verda_id"></v-autocomplete>
-              </v-col>
-            </v-row> -->
           </v-form>
         </v-container>
       </v-card-text>
@@ -135,7 +121,6 @@ async function submitForm() {
       } else {
         response = await store.dispatch("supply/register", credentials);
       }
-      // const response = await store.dispatch("finca/register", credentials);
       await store.dispatch("supplies/list")
       alertContainer.value.addAlert({
         id: 1,

@@ -43,6 +43,11 @@ export default {
           title: "Suministro",
           icon: "mdi-home",
           click: this.suministro,
+        },
+        {
+          title: "Suministro de salida",
+          icon: "mdi-home",
+          click: this.salida_suministro,
         }
       ],
     };
@@ -63,6 +68,9 @@ export default {
     suministro() {
       this.$router.push("/suministro_gestionar");
     },
+    salida_suministro() {
+      this.$router.push("/salida_suministro_gestionar")
+    }
   },
 };
 </script>
