@@ -106,6 +106,11 @@ const headers = [
     value: "total_cultive",
   },
   {
+    title: "Categoria del cultivo",
+    sortable: false,
+    value: "name_category",
+  },
+  {
     title: "Capacidad del cultivo",
     sortable: false,
     value: "capacidad_cultive",

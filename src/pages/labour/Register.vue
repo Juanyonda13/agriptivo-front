@@ -119,7 +119,7 @@
   // Rules
   const processRules = ref([
     (value) => !!value || 'Requerido.',
-    (value) => (value || '').length >= 3 || 'Mínimo 3 letras',
+    (value) => (value || '').length >= 1 || 'Mínimo 1 letras',
     (value) => (value || '').length <= 50 || 'Máximo 50 letras',
   ])
   const descriptionRules = ref([

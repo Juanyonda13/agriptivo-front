@@ -44,38 +44,38 @@
 </template>
 
 <script setup>
-import AlertContainer from "../../components/Alerts/AlertContainer.vue";
-import { useStore } from "vuex";
-import { ref, watch, onMounted, defineProps, defineEmits, computed } from "vue";
-import { useRoute } from "vue-router";
+import AlertContainer from "../../components/Alerts/AlertContainer.vue"
+import { useStore } from "vuex"
+import { ref, watch, onMounted, defineProps, defineEmits, computed } from "vue"
+import { useRoute } from "vue-router"
 
-const store = useStore();
+const store = useStore()
 
 // Data
-const prop = defineProps(["modelValue"]);
-const emit = defineEmits(["modelValue"]);
-const dialog = ref(prop.modelValue);
+const prop = defineProps(["modelValue"])
+const emit = defineEmits(["modelValue"])
+const dialog = ref(prop.modelValue)
 
 //FORM
-const fk_process_id = ref(null);
-const amount_outsupplies = ref(null);
-const fk_wunit_id = ref(null);
-const fk_supplies_id = ref(null);
+const fk_process_id = ref(null)
+const amount_outsupplies = ref(null)
+const fk_wunit_id = ref(null)
+const fk_supplies_id = ref(null)
 
-const validForm = ref(false);
-const loadingForm = ref(false);
+const validForm = ref(false)
+const loadingForm = ref(false)
 
-const form = ref(false);
-const alertContainer = ref(null);
-const showAlert = ref(false);
-const errorMessage = ref(null);
+const form = ref(false)
+const alertContainer = ref(null)
+const showAlert = ref(false)
+const errorMessage = ref(null)
 
 // Rules
 const cultiveRules = ref([
   (value) => !!value || "Requerido.",
   (value) => (value || "").length >= 3 || "Mínimo 3 letras",
   (value) => (value || "").length <= 50 || "Máximo 50 letras",
-]);
+])
 const selectRules = ref([
   (value) => !!value || "Requerido.",
 ])
@@ -84,20 +84,20 @@ const selectRules = ref([
 const route = useRoute()
 
 // Mounted
-onMounted(() => { store.dispatch("supply/list") })
-onMounted(() => { store.dispatch("Wunit/list") });
+onMounted(() => { store.dispatch("supply/listSuppliesProcess",route.params.id_process) })
+onMounted(() => { store.dispatch("Wunit/list") })
 
 // Computed
-const supplies = computed(() => Array.isArray(store.getters["supply/supplies"])?store.getters["supply/supplies"]:[]);
-const DataWunits = computed(() => store.getters["Wunit/wunits"]);
+const supplies = computed(() => Array.isArray(store.getters["supply/supplies"])?store.getters["supply/supplies"]:[])
+const DataWunits = computed(() => store.getters["Wunit/wunits"])
 
 
 // Methods
 async function submitForm() {
-  loadingForm.value = true;
-  validForm.value = false;
+  loadingForm.value = true
+  validForm.value = false
 
-  const { valid } = await form.value.validate();
+  const { valid } = await form.value.validate()
 
   if (valid) {
     const credentials = {
@@ -105,54 +105,54 @@ async function submitForm() {
       amount_outsupplies: amount_outsupplies.value,
       fk_process_id: route.params.id_process,
       fk_supplies_id: fk_supplies_id.value,
-    };
+    }
 
     try {
-      const response = await store.dispatch("outsupply/register", credentials);
+      const response = await store.dispatch("outsupply/register", credentials)
       await store.dispatch("outsupply/list", route.params.id_process)
       alertContainer.value.addAlert({
         id: 1,
         type: "success",
         message: response,
-      });
+      })
 
-      loadingForm.value = false;
-      close();
+      loadingForm.value = false
+      close()
     } catch (error) {
-      showAlert.value = true;
-      errorMessage.value = error.message;
+      showAlert.value = true
+      errorMessage.value = error.message
 
       if (error && typeof error === "object") {
-        const { code, message } = error;
-        const typeMessage = code === 409 ? "warning" : "error";
+        const { code, message } = error
+        const typeMessage = code === 409 ? "warning" : "error"
 
         alertContainer.value.addAlert({
           id: 1,
           type: typeMessage,
           message: message,
-        });
+        })
       } else {
         alertContainer.value.addAlert({
           id: 1,
           type: "error",
           message: error,
-        });
+        })
       }
 
-      loadingForm.value = false;
+      loadingForm.value = false
     }
   } else {
-    loadingForm.value = false;
+    loadingForm.value = false
   }
 }
 
 function cancel() {
-  emit("update:modelValue", false);
+  emit("update:modelValue", false)
 }
 watch(
   () => prop.modelValue,
   (newValue) => {
-    dialog.value = newValue;
+    dialog.value = newValue
   }
 )
 

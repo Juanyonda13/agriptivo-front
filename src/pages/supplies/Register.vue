@@ -40,19 +40,6 @@
               </v-col>
             </v-row>
 
-            <!-- <v-row>
-              <v-col cols="12" sm="6" md="12">
-                <v-autocomplete label="Municipios*" clearable item-title="name_municipality"
-                  item-value="id_municipality" :items="municipalities || []" variant="outlined"
-                  v-model="fk_municipality_id"></v-autocomplete>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col cols="12" sm="6" md="12">
-                <v-autocomplete label="Veredas*" clearable item-title="name_vereda" item-value="id_vereda"
-                  :items="veredas || []" variant="outlined" v-model="fk_verda_id"></v-autocomplete>
-              </v-col>
-            </v-row> -->
           </v-form>
         </v-container>
       </v-card-text>
@@ -69,6 +56,7 @@
 import AlertContainer from "../../components/Alerts/AlertContainer.vue"
 import { useStore } from "vuex"
 import { ref, watch, onMounted, defineProps, defineEmits, computed } from "vue"
+import { useRoute } from "vue-router";
 
 const store = useStore();
 
@@ -93,7 +81,7 @@ const errorMessage = ref(null)
 // Rules
 const fincaRules = ref([
   (value) => !!value || "Requerido.",
-  (value) => (value || "").length >= 3 || "Mínimo 3 letras",
+  (value) => (value || "").length >= 1 || "Mínimo 1 letras",
   (value) => (value || "").length <= 50 || "Máximo 50 letras",
 ]);
 
@@ -109,7 +97,7 @@ const typeForm = computed(() => prop.type === 1
   ? "Registrar Suministro"
   : "Actualizar Suministro"
 );
-
+const route = useRoute()
 
 // Methods
 async function submitForm() {
@@ -136,7 +124,7 @@ async function submitForm() {
         response = await store.dispatch("supply/register", credentials);
       }
       // const response = await store.dispatch("finca/register", credentials);
-      await store.dispatch("supply/list")
+      await store.dispatch("supply/list",route.params.id_finca)
       alertContainer.value.addAlert({
         id: 1,
         type: "success",

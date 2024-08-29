@@ -55,6 +55,15 @@ const actions = {
       throw new Error(error.message);
     }
   },
+  async listSuppliesProcess({commit},id){
+    try {
+      const response = await axiosInstance.get(`/api/supplies/process/${id}`);
+      const { results } = response.data;
+      commit("LIST", results);
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
 };
 const getters = {
   supplies: (state) => state.supplies,

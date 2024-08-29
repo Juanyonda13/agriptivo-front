@@ -28,21 +28,6 @@
           <v-icon size="small" class="me-2" @click="deleteItem(item.raw)">
             mdi-delete
           </v-icon>
-          <v-tooltip top>
-            <template v-slot:activator="{ on, attrs }">
-              <v-icon size="small" class="me-2" @click="crop_monitoring(item.raw.id_outsupplies)" v-bind="attrs"
-                v-on="on">
-                mdi-monitor-edit
-              </v-icon>
-            </template>
-          </v-tooltip>
-          <v-tooltip top>
-            <template v-slot:activator="{ on, attrs }">
-              <v-icon size="small" @click="estadistic(item.raw.id_outsupplies)" v-bind="attrs" v-on="on">
-                mdi-monitor
-              </v-icon>
-            </template>
-          </v-tooltip>
         </template>
       </v-data-table>
     </v-col>

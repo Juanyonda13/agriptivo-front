@@ -43,6 +43,42 @@
                 mdi-delete
               </v-icon>
             </v-btn>
+            <v-btn variant="text" @click="openModalReport(item.raw.id_process)" v-if="item.raw.state_process === 'abierto'" >
+              <v-tooltip top
+                activator="parent"
+                location="top"
+              > 
+                Generar Reporte
+                <template v-slot:activator="{ on, attrs }">
+                  <v-icon
+                    size="large"
+                    class="me-2"
+                    v-bind="attrs"
+                    v-on="on"
+                  >
+                    mdi-monitor-edit
+                  </v-icon>
+                </template>
+            </v-tooltip>
+            </v-btn>
+            <v-btn variant="text" @click="openModalDetailReport(item.raw.id_process,item.raw.state_process)" v-if="item.raw.state_process === 'cerrado'" >
+              <v-tooltip top
+                activator="parent"
+                location="top"
+              > 
+                Ver Reporte
+                <template v-slot:activator="{ on, attrs }">
+                  <v-icon
+                    size="large"
+                    class="me-2"
+                    v-bind="attrs"
+                    v-on="on"
+                  >
+                    mdi-monitor-edit
+                  </v-icon>
+                </template>
+            </v-tooltip>
+            </v-btn>
             <v-btn variant="text">
               <v-tooltip top
                 activator="parent"
@@ -107,6 +143,9 @@
   
 
     <Register :modelValue="modalOpen" @update:modelValue="modalOpen = $event" />
+    <Report :modalValueReport="modalValueReport" :idProcess="idProcess" @update:modalValueReport="modalValueReport = $event" />
+    
+    <DetailReport  :modalValueDetailReport="modalValueDetailReport" :idProcess="idProcess" @update:modalValueDetailReport="modalValueDetailReport = $event" :state="stateProcess.value" />
   </template>
     
     <script setup>
@@ -114,7 +153,8 @@
   import { useStore } from "vuex"
   import { useRouter, useRoute } from "vue-router"
   import Register from "./Register.vue"
-  
+  import Report from "./Report.vue"
+  import DetailReport from "./DetailReport.vue"
   const headers = [
     {
       title: "Proceso",
@@ -145,7 +185,11 @@
   const store = useStore()
   
   const modalOpen = ref(false)
+  const modalValueReport=ref(false)
   const search = ref("")
+  const idProcess =ref("")
+  const modalValueDetailReport= ref(false)
+  const stateProcess=ref("")
 
   onMounted(async () => {
     await store.dispatch("process/list",route.params.id_cultive)
@@ -155,11 +199,23 @@
     Array.isArray(store.getters["process/process"])
       ? store.getters["process/process"]
       : []
-  );
+  )
+
   const openModal = () => {
     modalOpen.value = !modalOpen.value
-  };
-  
+  }
+
+  const openModalReport = (id) => {
+    modalValueReport.value = !modalValueReport.value    
+    idProcess.value =id
+  }
+
+  const openModalDetailReport = async (id,state)=>{
+    modalValueDetailReport.value = !modalValueDetailReport.value 
+    idProcess.value =id
+    stateProcess.value=state
+  }
+
   const labour=(id)=>{
     router.push(
     {

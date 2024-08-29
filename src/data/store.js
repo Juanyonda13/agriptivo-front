@@ -24,6 +24,7 @@ import labour from './modules/labour'
 import cif from './modules/cif'
 import role from './modules/role'
 import outsupply from "./modules/outsupply";
+import report from "./modules/report";
 
 export default function storeConfig(apiUrl) {
   axiosInstance.defaults.baseURL = apiUrl;
@@ -49,6 +50,7 @@ export default function storeConfig(apiUrl) {
       cif,
       role,
       outsupply,
+      report
     },
   };
 
