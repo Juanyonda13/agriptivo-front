@@ -56,7 +56,11 @@
 import AlertContainer from "../../components/Alerts/AlertContainer.vue"
 import { useStore } from "vuex"
 import { ref, watch, onMounted, defineProps, defineEmits, computed } from "vue"
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
+
+
+// DATA
+const router = useRouter()
 
 const store = useStore();
 
@@ -99,6 +103,14 @@ const typeForm = computed(() => prop.type === 1
 );
 const route = useRoute()
 
+const dataReset = () => {
+  name_supplies.value = null
+  amount_supplies.value = null
+  fk_wunit_id.value = null
+  price_supplies.value = null
+  fk_finca_id.value = null
+}
+
 // Methods
 async function submitForm() {
 
@@ -124,15 +136,17 @@ async function submitForm() {
         response = await store.dispatch("supply/register", credentials);
       }
       // const response = await store.dispatch("finca/register", credentials);
-      await store.dispatch("supply/list",route.params.id_finca)
+      await store.dispatch("supply/list", route.params.id_finca)
       alertContainer.value.addAlert({
         id: 1,
         type: "success",
         message: response,
       });
+      loadingForm.value = false
+      cancel()
+      close()
+      dataReset()
 
-      loadingForm.value = false;
-      close();
     } catch (error) {
       showAlert.value = true;
       errorMessage.value = error.message;

@@ -84,13 +84,18 @@ const selectRules = ref([
 const route = useRoute()
 
 // Mounted
-onMounted(() => { store.dispatch("supply/listSuppliesProcess",route.params.id_process) })
+onMounted(() => { store.dispatch("supply/listSuppliesProcess", route.params.id_process) })
 onMounted(() => { store.dispatch("Wunit/list") })
 
 // Computed
-const supplies = computed(() => Array.isArray(store.getters["supply/supplies"])?store.getters["supply/supplies"]:[])
+const supplies = computed(() => Array.isArray(store.getters["supply/supplies"]) ? store.getters["supply/supplies"] : [])
 const DataWunits = computed(() => store.getters["Wunit/wunits"])
 
+const dataReset = () => {
+  amount_outsupplies.value = null
+  fk_wunit_id.value = null
+  fk_supplies_id.value = null
+}
 
 // Methods
 async function submitForm() {
@@ -115,9 +120,10 @@ async function submitForm() {
         type: "success",
         message: response,
       })
-
       loadingForm.value = false
+      cancel()
       close()
+      dataReset()
     } catch (error) {
       showAlert.value = true
       errorMessage.value = error.message
