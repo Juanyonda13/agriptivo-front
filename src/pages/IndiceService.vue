@@ -4,7 +4,7 @@
     <v-container>
       <nav class="nav-main mt-2">
         <div class="d-flex justify-start w-100 pb-5">
-          <v-img max-width="125" src="agrictivo-logo.svg"></v-img>
+          <v-img max-width="125" src="agriptivo-logo.svg"></v-img>
         </div>
         <ul class="ul-nav text-black">
           <li class="li-nav ">

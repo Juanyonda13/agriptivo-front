@@ -32,7 +32,7 @@
                 label="Recordarme el usuario"
               ></v-checkbox>
               <v-btn color="primary" block @click="submitForm">Ingresar</v-btn>
-              <a href="/register" class="m-1">no tienes cuenta? registrate</a>
+              <a href="/register" class="m-1">no tienes cuenta? regístrate</a>
             </v-form>
           </v-card-text>
         </v-card>
