@@ -4,10 +4,10 @@
       <v-card-title class="text-center">
         <span class="text-h5">Reporte</span>
       </v-card-title>
-      
+
       <v-card-text>
         <div v-if="loadingForm">Cargando datos del reporte...</div>
-        
+
         <div v-else>
           <v-timeline align="start" density="compact" v-if="dataReport">
             <v-timeline-item v-for="(value, key) in formattedDataReport" :key="key" dot-color="primary">
@@ -21,7 +21,7 @@
           </v-timeline>
         </div>
       </v-card-text>
-      
+
       <v-card-actions class="flex justify-center">
         <v-btn color="blue darken-1" variant="text" @click="cancel">Cerrar</v-btn>
       </v-card-actions>
@@ -52,6 +52,7 @@ async function fetch(id) {
     const data = store.getters['report/report'];
 
     dataReport.value = {
+      "Costos fijos": data.costos_fijos,
       "Punto de equilibrio": data.PE,
       "Mano de obra directa": data.mano_obra_directa,
       "Rentabilidad": data.rentabilidad,

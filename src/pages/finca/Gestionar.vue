@@ -1,26 +1,14 @@
 <template>
   <v-row justify="center">
     <v-col cols="6">
-      <v-text-field
-        outlined
-        dense
-        append-icon="mdi-magnify"
-        hide-details
-        v-model="search"
-      ></v-text-field>
+      <v-text-field outlined dense append-icon="mdi-magnify" hide-details v-model="search"></v-text-field>
     </v-col>
   </v-row>
 
   <v-row justify="center">
     <v-col cols="6">
-      <v-data-table
-        :headers="headers"
-        :items="filteredFincas"
-        class="elevation-3"
-        :search="search"
-        :items-per-page="5"
-        height="400"
-      >
+      <v-data-table :headers="headers" :items="filteredFincas" class="elevation-3" :search="search" :items-per-page="5"
+        height="400">
         <!-- Contenido adicional del v-data-table -->
         <template v-slot:top>
           <v-toolbar flat>
@@ -32,68 +20,45 @@
           </v-toolbar>
         </template>
         <template v-slot:[`item.actions`]="{ item }">
-            <v-btn variant="text" class="">
-              <v-icon size="large" class="me-2" @click="openModal(-1, item)">
-                mdi-pencil
-              </v-icon>
-            </v-btn>
-            <v-btn variant="text">
-              <v-icon size="large" class="me-2" @click="deleteItem(item.raw)">
-                mdi-delete
-              </v-icon>
-            </v-btn>
-            <v-btn variant="text">
-              <v-tooltip top
-                activator="parent"
-                location="top"
-              >
-                Cultivo
-                <template v-slot:activator="{ on, attrs }">
-                  <v-icon
-                    size="large"
-                    class="me-2"
-                    @click="cultive(item.raw.id_finca)"
-                    v-bind="attrs"
-                    v-on="on"
-                  >
-                    mdi-monitor-edit
-                  </v-icon>
-                </template>
+          <v-btn variant="text" class="">
+            <v-icon size="large" class="me-2" @click="openModal(-1, item)">
+              mdi-pencil
+            </v-icon>
+          </v-btn>
+          <v-btn variant="text">
+            <v-icon size="large" class="me-2" @click="deleteItem(item.raw)">
+              mdi-delete
+            </v-icon>
+          </v-btn>
+          <v-btn @click="cultive(item.raw.id_finca)" variant="text">
+            <v-tooltip top activator="parent" location="top">
+              Cultivo
+              <template v-slot:activator="{ on, attrs }">
+                <v-icon size="large" class="me-2" v-bind="attrs" v-on="on">
+                  mdi-monitor-edit
+                </v-icon>
+              </template>
             </v-tooltip>
-            </v-btn>
-            <v-btn variant="text">
-              <v-tooltip top
-                activator="parent"
-                location="top"
-              >
-                Sumninistros entrada
-                <template v-slot:activator="{ on, attrs }">
-                  <v-icon
-                    size="large"
-                    class="me-2"
-                    @click="supplies(item.raw.id_finca)"
-                    v-bind="attrs"
-                    v-on="on"
-                  >
-                    mdi-monitor-edit
-                  </v-icon>
-                </template>
+          </v-btn>
+
+          <v-btn @click="supplies(item.raw.id_finca)" variant="text">
+            <v-tooltip top activator="parent" location="top">
+              Sumninistros entrada
+              <template v-slot:activator="{ on, attrs }">
+                <v-icon size="large" class="me-2" v-bind="attrs" v-on="on">
+                  mdi-monitor-edit
+                </v-icon>
+              </template>
             </v-tooltip>
-            </v-btn>
-          </template>
+          </v-btn>
+        </template>
       </v-data-table>
     </v-col>
   </v-row>
 
   <!-- Modal de registro -->
-  <Register
-    :modelValue="modalOpen"
-    @update:modelValue="modalOpen = $event"
-    :type="typeModal"
-    @update:type="typeModal = $event"
-    :data="dataModal"
-    @update:data="dataModal = $event"
-  />
+  <Register :modelValue="modalOpen" @update:modelValue="modalOpen = $event" :type="typeModal"
+    @update:type="typeModal = $event" :data="dataModal" @update:data="dataModal = $event" />
 </template>
 
 <script setup>
@@ -156,19 +121,19 @@ const components = { Register }
 const router = useRouter()
 
 const cultive = (id) => {
-   router.push(
+  router.push(
     {
-      name:'cultive_gestionar',
-      params:{id_finca:id}
+      name: 'cultive_gestionar',
+      params: { id_finca: id }
     }
-   )
+  )
 }
 const supplies = (id) => {
-   router.push(
+  router.push(
     {
-      name:'suministro_gestionar',
-      params:{id_finca:id}
+      name: 'suministro_gestionar',
+      params: { id_finca: id }
     }
-   )
+  )
 }
 </script>
